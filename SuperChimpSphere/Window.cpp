@@ -58,6 +58,11 @@ Window::~Window()
 	DestroyWindow(hWnd);
 }
 
+void Window::SetTitle(const std::string& title)
+{
+	SetWindowText(hWnd, title.c_str());
+}
+
 LRESULT WINAPI Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
 	if (msg == WM_NCCREATE)
