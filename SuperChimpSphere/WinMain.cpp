@@ -1,4 +1,5 @@
-#include "Window.h"
+#include "App.h"
+#include <iostream>
 
 int CALLBACK WinMain(
 	HINSTANCE hInstance,
@@ -6,13 +7,6 @@ int CALLBACK WinMain(
 	LPSTR lpCmdLine,
 	int nCmdShow)
 {
-	Window wnd(800, 300, "Super Chimp Sphere");
-	MSG msg;
-	BOOL gResult;
-	while ((gResult = GetMessage(&msg, nullptr, 0, 0)) > 0)
-	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-	}
-	return gResult == -1 ? -1 : msg.wParam;
+	App app{};
+	return app.Play();
 }
