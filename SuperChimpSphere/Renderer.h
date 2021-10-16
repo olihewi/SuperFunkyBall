@@ -10,7 +10,7 @@ public:
 	Renderer& operator=(const Renderer& other) = delete;
 	void EndFrame();
 	void SetBackground(Colour c);
-	void RenderTestTriangle();
+	void RenderTestTriangle(float angle);
 private:
 	Microsoft::WRL::ComPtr<ID3D11Device> device;
 	Microsoft::WRL::ComPtr<IDXGISwapChain> swapChain;

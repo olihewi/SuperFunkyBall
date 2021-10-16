@@ -1,6 +1,8 @@
 #include "Renderer.h"
 #include <d3dcompiler.h>
 #include <array>
+#include <cmath>
+#include <DirectXMath.h>
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "D3DCompiler.lib")
@@ -45,9 +47,8 @@ Renderer::Renderer(HWND hWnd)
 void Renderer::EndFrame()
 {
 	const float color[]{ backgroundColour.r,backgroundColour.g,backgroundColour.b,backgroundColour.a };
-	deviceContext->ClearRenderTargetView(targetView.Get(), color);
-	RenderTestTriangle();
 	swapChain->Present(1u, 0u);
+	deviceContext->ClearRenderTargetView(targetView.Get(), color);
 }
 
 void Renderer::SetBackground(Colour c)
@@ -55,34 +56,92 @@ void Renderer::SetBackground(Colour c)
 	backgroundColour = c;
 }
 
-void Renderer::RenderTestTriangle()
+void Renderer::RenderTestTriangle(float angle)
 {
 	struct Vertex
 	{
-		float x, y;
+		float x, y, z;
+		float r, g, b;
 	};
 	const Vertex vertices[]
 	{
-		{0.0F, 0.5F},
-		{0.5F,-0.5F},
-		{-0.5F,-0.5F},
+		{ -1.0f,-1.0f,-1.0f, 0.0F,0.0F,0.0F},
+		{ 1.0f,-1.0f,-1.0f, 1.0F,0.0F,0.0F},
+		{ -1.0f,1.0f,-1.0f, 0.0F,1.0F,0.0F},
+		{ 1.0f,1.0f,-1.0f, 1.0F,1.0F,0.0F},
+		{ -1.0f,-1.0f,1.0f, 0.0F,0.0F,1.0F},
+		{ 1.0f,-1.0f,1.0f, 1.0F,0.0F,1.0F},
+		{ -1.0f,1.0f,1.0f, 0.0F,1.0F,1.0F},
+		{ 1.0f,1.0f,1.0f, 1.0F,1.0F,1.0F},
+	};
+	const unsigned short triangles[]
+	{
+		0,2,1, 2,3,1,
+		1,3,5, 3,7,5,
+		2,6,3, 3,6,7,
+		4,5,7, 4,7,6,
+		0,4,2, 2,4,6,
+		0,1,4, 1,5,4
 	};
 
-	D3D11_BUFFER_DESC bufferDesc{};
-	bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	bufferDesc.CPUAccessFlags = 0;
-	bufferDesc.MiscFlags = 0;
-	bufferDesc.ByteWidth = sizeof(vertices);
-	bufferDesc.StructureByteStride = sizeof(Vertex);
-	D3D11_SUBRESOURCE_DATA subresourceData{};
-	subresourceData.pSysMem = vertices;
+	D3D11_BUFFER_DESC vertexBufferDesc{};
+	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	vertexBufferDesc.CPUAccessFlags = 0;
+	vertexBufferDesc.MiscFlags = 0;
+	vertexBufferDesc.ByteWidth = sizeof(vertices);
+	vertexBufferDesc.StructureByteStride = sizeof(Vertex);
+	D3D11_SUBRESOURCE_DATA vertexSubresourceData{};
+	vertexSubresourceData.pSysMem = vertices;
 	Microsoft::WRL::ComPtr<ID3D11Buffer> vertexBuffer;
-	device->CreateBuffer(&bufferDesc, &subresourceData, &vertexBuffer);
+	device->CreateBuffer(&vertexBufferDesc, &vertexSubresourceData, &vertexBuffer);
 
 	const UINT stride = sizeof(Vertex);
 	const UINT offset = 0u;
 	deviceContext->IASetVertexBuffers(0u, 1u, vertexBuffer.GetAddressOf(), &stride, &offset);
+
+	D3D11_BUFFER_DESC triangleBufferDesc{};
+	triangleBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	triangleBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	triangleBufferDesc.CPUAccessFlags = 0;
+	triangleBufferDesc.MiscFlags = 0;
+	triangleBufferDesc.ByteWidth = sizeof(triangles);
+	triangleBufferDesc.StructureByteStride = sizeof(unsigned short);
+	D3D11_SUBRESOURCE_DATA triangleSubresourceData{};
+	triangleSubresourceData.pSysMem = triangles;
+	Microsoft::WRL::ComPtr<ID3D11Buffer> triangleBuffer;
+	device->CreateBuffer(&triangleBufferDesc, &triangleSubresourceData, &triangleBuffer);
+
+	deviceContext->IASetIndexBuffer(triangleBuffer.Get(), DXGI_FORMAT_R16_UINT, 0U);
+
+	// Constant Buffer
+	struct ConstantBuffer
+	{
+		DirectX::XMMATRIX transformation;
+	};
+	const ConstantBuffer cb =
+	{
+		{
+			DirectX::XMMatrixTranspose(
+				DirectX::XMMatrixRotationZ(angle) *
+				DirectX::XMMatrixRotationX(angle)*
+				DirectX::XMMatrixTranslation(0.0F, 0.0F, 4.0F) *
+				DirectX::XMMatrixPerspectiveLH(1.0F,720.0F / 1080.0F,0.5F,10.0F)
+			)
+		}
+	};
+	Microsoft::WRL::ComPtr<ID3D11Buffer> constantBuffer;
+	D3D11_BUFFER_DESC cbd;
+	cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	cbd.Usage = D3D11_USAGE_DYNAMIC;
+	cbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	cbd.MiscFlags = 0U;
+	cbd.ByteWidth = sizeof(cb);
+	cbd.StructureByteStride = 0U;
+	D3D11_SUBRESOURCE_DATA csd{};
+	csd.pSysMem = &cb;
+	device->CreateBuffer(&cbd, &csd, &constantBuffer);
+	deviceContext->VSSetConstantBuffers(0U, 1U, constantBuffer.GetAddressOf());
 
 	Microsoft::WRL::ComPtr<ID3DBlob> blob;
 	// Pixel Shader
@@ -101,7 +160,8 @@ void Renderer::RenderTestTriangle()
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> inputLayout;
 	const D3D11_INPUT_ELEMENT_DESC elementDesc[]
 	{
-		{"Position",0,DXGI_FORMAT_R32G32_FLOAT,0,0,D3D11_INPUT_PER_VERTEX_DATA,0}
+		{"Position",0,DXGI_FORMAT_R32G32B32_FLOAT,0,0,D3D11_INPUT_PER_VERTEX_DATA,0},
+		{"Colour",0,DXGI_FORMAT_R32G32B32_FLOAT,0,12U,D3D11_INPUT_PER_VERTEX_DATA,0}
 	};
 	device->CreateInputLayout(elementDesc, static_cast<UINT>(std::size(elementDesc)), blob->GetBufferPointer(), blob->GetBufferSize(), &inputLayout);
 	deviceContext->IASetInputLayout(inputLayout.Get());
@@ -117,5 +177,5 @@ void Renderer::RenderTestTriangle()
 
 	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	deviceContext->Draw(static_cast<UINT>(std::size(vertices)), 0);
+	deviceContext->DrawIndexed(static_cast<UINT>(std::size(triangles)), 0U, 0U);
 }

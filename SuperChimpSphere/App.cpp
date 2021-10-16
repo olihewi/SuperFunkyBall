@@ -23,6 +23,7 @@ void App::GameLoop()
 	Update();
 	Render();
 	window.GetRenderer().EndFrame();
+	window.GetRenderer().RenderTestTriangle(time.Time());
 }
 
 void App::Update()
