@@ -15,7 +15,6 @@ int App::Play()
 		}
 		GameLoop();
 	}
-	
 	return -1;
 }
 
@@ -28,7 +27,7 @@ void App::GameLoop()
 void App::Update()
 {
 	time.Tick();
-	window.SetTitle(std::to_string(time.Time()));
+	window.GetRenderer().EndFrame();
 }
 
 void App::Render()

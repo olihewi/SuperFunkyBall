@@ -2,6 +2,8 @@
 #include <Windows.h>
 #include <string>
 #include <optional>
+#include <memory>
+#include "Renderer.h"
 #include "Keyboard.h"
 #include "Mouse.h"
 
@@ -29,6 +31,7 @@ public:
 	Window& operator=(const Window&) = delete;
 	void SetTitle(const std::string& title);
 	static std::optional<int> ProcessMessages();
+	Renderer& GetRenderer();
 private:
 	static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 	static LRESULT CALLBACK HandleMsgProxy(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
@@ -39,4 +42,5 @@ private:
 	HWND hWnd;
 	Keyboard keyboard;
 	Mouse mouse;
+	std::unique_ptr<Renderer> renderer;
 };

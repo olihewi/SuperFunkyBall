@@ -51,6 +51,7 @@ Window::Window(int width, int height, const char* name) noexcept
 		nullptr, nullptr, WindowClass::GetInstance(), this
 	);
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
+	renderer = std::make_unique<Renderer>(hWnd);
 }
 
 Window::~Window()
@@ -76,6 +77,11 @@ std::optional<int> Window::ProcessMessages()
 		DispatchMessage(&msg);
 	}
 	return {};
+}
+
+Renderer& Window::GetRenderer()
+{
+	return *renderer;
 }
 
 LRESULT WINAPI Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept

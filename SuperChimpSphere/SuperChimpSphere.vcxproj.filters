@@ -45,6 +45,9 @@
     <ClCompile Include="GameTime.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Keyboard.h">
@@ -60,6 +63,12 @@
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="GameTime.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSettings.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>
