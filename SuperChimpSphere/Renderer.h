@@ -16,6 +16,7 @@ private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain> swapChain;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> deviceContext;
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> targetView;
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> depthStencilView;
 
 	Colour backgroundColour = Colours::CornflowerBlue;
 };

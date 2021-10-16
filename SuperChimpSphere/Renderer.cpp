@@ -42,12 +42,42 @@ Renderer::Renderer(HWND hWnd)
 	Microsoft::WRL::ComPtr<ID3D11Resource> backBuffer;
 	swapChain->GetBuffer(0, __uuidof(ID3D11Resource), &backBuffer);
 	device->CreateRenderTargetView(backBuffer.Get(), nullptr, &targetView);
+
+	D3D11_DEPTH_STENCIL_DESC dsDesc{};
+	dsDesc.DepthEnable = TRUE;
+	dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	dsDesc.DepthFunc = D3D11_COMPARISON_LESS;
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState;
+	device->CreateDepthStencilState(&dsDesc, &depthStencilState);
+	deviceContext->OMSetDepthStencilState(depthStencilState.Get(), 1U);
+
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> depthStencil;
+	D3D11_TEXTURE2D_DESC depthDesc{};
+	depthDesc.Width = 1080;
+	depthDesc.Height = 720;
+	depthDesc.MipLevels = 1U;
+	depthDesc.ArraySize = 1U;
+	depthDesc.Format = DXGI_FORMAT_D32_FLOAT;
+	depthDesc.SampleDesc.Count = 1U;
+	depthDesc.SampleDesc.Quality = 0U;
+	depthDesc.Usage = D3D11_USAGE_DEFAULT;
+	depthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	device->CreateTexture2D(&depthDesc, nullptr, &depthStencil);
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc{};
+	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
+	dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	dsvDesc.Texture2D.MipSlice = 0U;
+	device->CreateDepthStencilView(depthStencil.Get(), &dsvDesc, &depthStencilView);
+
+	deviceContext->OMSetRenderTargets(1U, targetView.GetAddressOf(), depthStencilView.Get());
 }
 
 void Renderer::EndFrame()
 {
 	const float color[]{ backgroundColour.r,backgroundColour.g,backgroundColour.b,backgroundColour.a };
 	swapChain->Present(1u, 0u);
+	deviceContext->ClearDepthStencilView(depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0F, 0U);
 	deviceContext->ClearRenderTargetView(targetView.Get(), color);
 }
 
@@ -154,8 +184,6 @@ void Renderer::RenderTestTriangle(float angle)
 	D3DReadFileToBlob(L"VertexShader.cso", &blob);
 	device->CreateVertexShader(blob->GetBufferPointer(), blob->GetBufferSize(), nullptr, &vertexShader);
 	deviceContext->VSSetShader(vertexShader.Get(), nullptr, 0U);
-
-	deviceContext->OMSetRenderTargets(1U, targetView.GetAddressOf(), nullptr);
 
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> inputLayout;
 	const D3D11_INPUT_ELEMENT_DESC elementDesc[]
