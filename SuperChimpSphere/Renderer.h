@@ -2,6 +2,8 @@
 #include <d3d11.h>
 #include "Colour.h"
 #include <wrl.h>
+#include <vector>
+#include "ConstantBuffer.h"
 class Renderer
 {
 public:
@@ -11,12 +13,18 @@ public:
 	void EndFrame();
 	void SetBackground(Colour c);
 	void RenderTestTriangle(float angle);
+	// Getters
+	ID3D11Device* GetDevice();
+	ID3D11DeviceContext* GetContext();
 private:
 	Microsoft::WRL::ComPtr<ID3D11Device> device;
 	Microsoft::WRL::ComPtr<IDXGISwapChain> swapChain;
-	Microsoft::WRL::ComPtr<ID3D11DeviceContext> deviceContext;
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> targetView;
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> depthStencilView;
+
+	ConstantBuffer cb;
+	Microsoft::WRL::ComPtr<ID3D11Buffer> constantBuffer;
 
 	Colour backgroundColour = Colours::CornflowerBlue;
 };

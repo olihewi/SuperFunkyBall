@@ -1,18 +1,30 @@
-struct VSOut
+cbuffer simpleConstantBuffer : register(b0)
 {
-	float3 colour : Colour;
-	float4 pos : SV_Position;
+    matrix model;
+    matrix view;
+    matrix projection;
 };
 
-cbuffer CBuf
+struct VertexShaderInput
 {
-	matrix transform;
+    float3 pos : POSITION;
 };
 
-VSOut main( float3 pos : Position, float3 colour : Colour )
+struct PixelShaderInput
 {
-	VSOut vso;
-	vso.pos = mul(float4(pos.x, pos.y, pos.z, 1.0F), transform);
-	vso.colour = colour;
-	return vso;
+    float4 pos : SV_POSITION;
+};
+
+PixelShaderInput main(VertexShaderInput input)
+{
+    PixelShaderInput vertexShaderOutput;
+    float4 pos = float4(input.pos, 1.0f);
+
+    // Transform the vertex position into projection space.
+    pos = mul(pos, model);
+    pos = mul(pos, view);
+    pos = mul(pos, projection);
+    vertexShaderOutput.pos = pos;
+
+    return vertexShaderOutput;
 }

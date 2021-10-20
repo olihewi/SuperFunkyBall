@@ -1,6 +1,7 @@
 #pragma once
 #include "Window.h"
 #include "GameTime.h"
+#include "Mesh.h"
 class App
 {
 public:
@@ -13,5 +14,6 @@ private:
 
 	Window window;
 	GameTime time;
+	Mesh* mesh;
 };
 

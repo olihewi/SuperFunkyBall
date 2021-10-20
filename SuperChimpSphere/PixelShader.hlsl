@@ -1,4 +1,10 @@
-float4 main(float3 colour : Colour) : SV_Target
+struct PixelShaderInput
 {
-	return float4(colour,1.0F);
+    float4 pos : SV_POSITION;
+};
+
+float4 main(PixelShaderInput input) : SV_TARGET
+{
+    // Draw the entire triangle yellow.
+    return float4(1.0f, 1.0f, 0.0f, 1.0f);
 }
