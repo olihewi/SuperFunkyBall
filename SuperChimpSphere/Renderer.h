@@ -12,7 +12,6 @@ public:
 	Renderer& operator=(const Renderer& other) = delete;
 	void EndFrame();
 	void SetBackground(Colour c);
-	void RenderTestTriangle(float angle);
 	// Getters
 	ID3D11Device* GetDevice();
 	ID3D11DeviceContext* GetContext();
