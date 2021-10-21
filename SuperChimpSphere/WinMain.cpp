@@ -7,6 +7,6 @@ int CALLBACK WinMain(
 	LPSTR lpCmdLine,
 	int nCmdShow)
 {
-	App app{};
+	App app = App(GameSettings(GameSettings::Video(Vector2(1920.0F,1080.0F),true)));
 	return app.Play();
 }

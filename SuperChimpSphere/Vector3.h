@@ -46,3 +46,49 @@ namespace Vector3s
 	const Vector3 backward { 0.0F, 0.0F, -1.0F };
 }
 
+struct Vector2
+{
+	Vector2(float _x, float _y);
+	Vector2(const Vector2& other);
+	Vector2& operator+=(const Vector2& v);
+	Vector2 operator+(const Vector2& v) const;
+	Vector2& operator-=(const Vector2& v);
+	Vector2 operator-(const Vector2& v) const;
+	Vector2& operator*=(const Vector2& v);
+	Vector2 operator*(const Vector2& v) const;
+	Vector2& operator/=(const Vector2& v);
+	Vector2 operator/(const Vector2& v) const;
+
+	Vector2& operator*=(const float scalar);
+	Vector2 operator*(const float scalar) const;
+	Vector2& operator/=(const float scalar);
+	Vector2 operator/(const float scalar) const;
+
+	Vector2 operator-() const;
+
+	bool operator==(const Vector2& v) const;
+	bool operator!=(const Vector2& v) const;
+	bool operator<(const Vector2& v) const;
+	bool operator<=(const Vector2& v) const;
+	bool operator>(const Vector2& v) const;
+	bool operator>=(const Vector2& v) const;
+
+	float SqrMagnitude();
+	float Magnitude();
+	Vector2 Normalized();
+	float DotProduct(const Vector2& v);
+
+	float x, y;
+};
+
+namespace Vector2s
+{
+	const Vector2 zero{ 0.0F, 0.0F };
+	const Vector2 one{ 1.0F, 1.0F };
+	const Vector2 up{ 0.0F, 1.0F };
+	const Vector2 down{ 0.0F, -1.0F };
+	const Vector2 left{ -1.0F, 0.0F };
+	const Vector2 right{ 1.0F, 0.0F };
+	const Vector2 forward{ 0.0F, 0.0F };
+	const Vector2 backward{ 0.0F, 0.0F };
+}

@@ -11,7 +11,7 @@ public:
 	void Update(Keyboard& kb, GameTime& time);
 	void Render(Renderer& renderer);
 private:
-	DirectX::XMMATRIX transform = DirectX::XMMatrixIdentity() * DirectX::XMMatrixTranspose(DirectX::XMMatrixTranslation(0.0F,0.0F,1.0F));
+	DirectX::XMMATRIX transform = DirectX::XMMatrixIdentity() * DirectX::XMMatrixTranslation(0.0F,0.0F,1.0F);
 	std::vector<std::unique_ptr<GameComponent>> components;
 };
 

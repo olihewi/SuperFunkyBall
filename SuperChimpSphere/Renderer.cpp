@@ -9,6 +9,8 @@
 
 Renderer::Renderer(HWND hWnd)
 {
+	RECT rect;
+	GetClientRect(hWnd, &rect);
 	DXGI_SWAP_CHAIN_DESC sd{};
 	sd.BufferDesc.Width = 0;
 	sd.BufferDesc.Height = 0;
@@ -53,8 +55,8 @@ Renderer::Renderer(HWND hWnd)
 
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> depthStencil;
 	D3D11_TEXTURE2D_DESC depthDesc{};
-	depthDesc.Width = 1080;
-	depthDesc.Height = 720;
+	depthDesc.Width = static_cast<unsigned int>(rect.right - rect.left);
+	depthDesc.Height = static_cast<unsigned int>(rect.bottom - rect.top);
 	depthDesc.MipLevels = 1U;
 	depthDesc.ArraySize = 1U;
 	depthDesc.Format = DXGI_FORMAT_D32_FLOAT;
@@ -74,6 +76,17 @@ Renderer::Renderer(HWND hWnd)
 
 	constantBuffer = std::make_unique<ConstantBuffer>(device.Get(), modelViewProjection);
 	constantBuffer->Load(context.Get(), modelViewProjection);
+
+	D3D11_VIEWPORT viewport;
+	viewport.Width = depthDesc.Width;
+	viewport.Height = depthDesc.Height;
+	viewport.MinDepth = 0;
+	viewport.MaxDepth = 1;
+	viewport.TopLeftX = 0;
+	viewport.TopLeftY = 0;
+	context->RSSetViewports(1U, &viewport);
+
+	SetProjectionMatrix(DirectX::XMMatrixPerspectiveRH(1.0F, viewport.Height / viewport.Width, 0.5F, 10.0F));
 }
 
 void Renderer::EndFrame()
@@ -82,14 +95,6 @@ void Renderer::EndFrame()
 	swapChain->Present(1u, 0u);
 	context->ClearDepthStencilView(depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0F, 0U);
 	context->ClearRenderTargetView(targetView.Get(), color); 
-	D3D11_VIEWPORT viewport;
-	viewport.Width = 1080;
-	viewport.Height = 720;
-	viewport.MinDepth = 0;
-	viewport.MaxDepth = 1;
-	viewport.TopLeftX = 0;
-	viewport.TopLeftY = 0;
-	context->RSSetViewports(1U, &viewport);
 }
 
 void Renderer::SetBackground(Colour c)
@@ -109,18 +114,18 @@ ID3D11DeviceContext* Renderer::GetContext()
 
 void Renderer::SetModelMatrix(const DirectX::XMMATRIX& modelMatrix)
 {
-	modelViewProjection.model = modelMatrix;
+	modelViewProjection.model = DirectX::XMMatrixTranspose(modelMatrix);
 	constantBuffer->Load(context.Get(), modelViewProjection);
 }
 
 void Renderer::SetViewMatrix(const DirectX::XMMATRIX& viewMatrix)
 {
-	modelViewProjection.view = viewMatrix;
+	modelViewProjection.view = DirectX::XMMatrixTranspose(viewMatrix);
 	constantBuffer->Load(context.Get(), modelViewProjection);
 }
 
 void Renderer::SetProjectionMatrix(const DirectX::XMMATRIX& projectionMatrix)
 {
-	modelViewProjection.projection = projectionMatrix;
+	modelViewProjection.projection = DirectX::XMMatrixTranspose(projectionMatrix);
 	constantBuffer->Load(context.Get(), modelViewProjection);
 }

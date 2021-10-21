@@ -12,13 +12,8 @@ void GameObject::Update(Keyboard& keyboard, GameTime& time)
 	{
 		component->Update(time);
 	}
-	Vector3 input
-	{
-		keyboard.GetKey('D') ? -1.0F : keyboard.GetKey('A') ? 1.0F : 0.0F,
-		0.0F,
-		keyboard.GetKey('S') ? -1.0F : keyboard.GetKey('W') ? 1.0F : 0.0F
-	};
-	transform *= DirectX::XMMatrixTranspose(DirectX::XMMatrixTranslation(input.x * time.Delta(), 0.0F, input.z * time.Delta()));
+	auto input = keyboard.GetWASD() * (keyboard.GetKey(16 /*shift*/) ? 2.0F : 1.0F);
+	transform *= DirectX::XMMatrixTranslation(-input.x * time.Delta(), 0.0F, input.y * time.Delta());
 }
 
 void GameObject::Render(Renderer& renderer)

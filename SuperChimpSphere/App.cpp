@@ -1,6 +1,6 @@
 #include "App.h"
 
-App::App() : window(1080,720,"ASGE")
+App::App(const GameSettings& _settings) : settings(_settings), window(static_cast<int>(settings.video.resolution.x),static_cast<int>(settings.video.resolution.y),"ASGE")
 {
 	//auto mesh = std::make_unique<Mesh>(Mesh::CreatePrimitiveSphere(window.GetRenderer(), 1.0F, 20U));
 	//gameObjects.push_back(std::make_unique<GameObject>(std::move(mesh)));

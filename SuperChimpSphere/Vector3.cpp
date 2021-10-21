@@ -154,3 +154,138 @@ float Vector3::DotProduct(const Vector3& v)
 {
 	return x * v.x + y * v.y + z * v.z;
 }
+
+Vector2::Vector2(float _x, float _y) : x(_x), y(_y)
+{
+}
+
+Vector2::Vector2(const Vector2& other) : x(other.x), y(other.y)
+{
+}
+
+Vector2& Vector2::operator+=(const Vector2& v) {
+	x += v.x;
+	y += v.y;
+	return *this;
+}
+
+Vector2 Vector2::operator+(const Vector2& v) const {
+	return Vector2(x + v.x, y + v.y);
+}
+
+Vector2& Vector2::operator-=(const Vector2& v) {
+	x -= v.x;
+	y -= v.y;
+	return *this;
+}
+
+Vector2 Vector2::operator-(const Vector2& v) const {
+	return Vector2(x - v.x, y - v.y);
+}
+
+Vector2& Vector2::operator*=(const Vector2& v) {
+	x *= v.x;
+	y *= v.y;
+	return *this;
+}
+
+Vector2 Vector2::operator*(const Vector2& v) const {
+	return Vector2(x * v.x, y * v.y);
+}
+
+Vector2& Vector2::operator/=(const Vector2& v) {
+	x /= v.x;
+	y /= v.y;
+	return *this;
+}
+
+Vector2 Vector2::operator/(const Vector2& v) const {
+	return Vector2(x / v.x, y / v.y);
+}
+
+Vector2& Vector2::operator*=(const float scalar) {
+	x *= scalar;
+	y *= scalar;
+	return *this;
+}
+
+Vector2 Vector2::operator*(const float scalar) const {
+	return Vector2(x * scalar, y * scalar);
+}
+
+Vector2& Vector2::operator/=(const float scalar) {
+	x /= scalar;
+	y /= scalar;
+	return *this;
+}
+
+Vector2 Vector2::operator/(const float scalar) const {
+	return Vector2(x / scalar, y / scalar);
+}
+
+Vector2 Vector2::operator-() const {
+	return Vector2(-x, -y);
+}
+
+bool Vector2::operator==(const Vector2& v) const {
+	return x == v.x && y == v.y;
+}
+
+bool Vector2::operator!=(const Vector2& v) const {
+	return x != v.x || y != v.y;
+}
+
+bool Vector2::operator<(const Vector2& v) const {
+	if (x == v.x) {
+		return y < v.y;
+	}
+	return x < v.x;
+}
+
+bool Vector2::operator>(const Vector2& v) const {
+	if (x == v.x) {
+		return y > v.y;
+	}
+	return x > v.x;
+}
+
+bool Vector2::operator<=(const Vector2& v) const {
+	if (x == v.x) {
+		return y < v.y;
+	}
+	return x < v.x;
+}
+
+bool Vector2::operator>=(const Vector2& v) const {
+	if (x == v.x) {
+		return y > v.y;
+	}
+	return x > v.x;
+}
+
+float Vector2::SqrMagnitude()
+{
+	float x2 = x * x;
+	float y2 = y * y;
+	return x2 + y2;
+}
+
+float Vector2::Magnitude()
+{
+	return std::sqrtf(SqrMagnitude());
+}
+
+Vector2 Vector2::Normalized()
+{
+	float mag2 = SqrMagnitude();
+	if (mag2 == 0.0F)
+	{
+		return Vector2s::zero;
+	}
+	return *this * std::sqrtf(mag2);
+}
+
+float Vector2::DotProduct(const Vector2& v)
+{
+	return x * v.x + y * v.y;
+}
