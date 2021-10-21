@@ -24,6 +24,7 @@
     <ProjectGuid>{3bb1a386-1de5-4d07-a70e-bb4b02dff1ab}</ProjectGuid>
     <RootNamespace>SuperChimpSphere</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>SuperFunkyBall</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

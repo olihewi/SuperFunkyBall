@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SuperChimpSphere", "SuperChimpSphere\SuperChimpSphere.vcxproj", "{3BB1A386-1DE5-4D07-A70E-BB4B02DFF1AB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SuperFunkyBall", "SuperChimpSphere\SuperChimpSphere.vcxproj", "{3BB1A386-1DE5-4D07-A70E-BB4B02DFF1AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
