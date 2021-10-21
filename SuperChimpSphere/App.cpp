@@ -1,11 +1,17 @@
 #include "App.h"
-#include <sstream>
-#include <iomanip>
 
 App::App() : window(1080,720,"ASGE")
 {
+	//auto mesh = std::make_unique<Mesh>(Mesh::CreatePrimitiveSphere(window.GetRenderer(), 1.0F, 20U));
+	//gameObjects.push_back(std::make_unique<GameObject>(std::move(mesh)));
 	//mesh = std::make_unique<Mesh>(Mesh::CreatePrimitiveCube(window.GetRenderer(), Vector3{ 1.0F,1.0F,1.0F }));
-	mesh = std::make_unique<Mesh>(Mesh::CreatePrimitiveSphere(window.GetRenderer(), 1.0F, 20U));
+	/*gameObjects.push_back(std::make_unique<GameObject>(
+		std::vector<std::unique_ptr<GameComponent>>{
+			std::make_unique<Mesh>(Mesh::CreatePrimitiveSphere(window.GetRenderer(), 1.0F, 20U))
+		},
+		DirectX::XMMatrixIdentity));*/
+	//mesh = std::make_unique<Mesh>(Mesh::CreatePrimitiveSphere(window.GetRenderer(), 1.0F, 20U));
+	gameObjects.push_back(std::make_unique<GameObject>(window.GetRenderer()));
 }
 
 int App::Play()
@@ -31,6 +37,10 @@ void App::GameLoop()
 void App::Update()
 {
 	time.Tick();
+	for (auto& gameObject : gameObjects)
+	{
+		gameObject->Update(window.GetKeyboard(), time);
+	}
 }
 
 void App::Render()
@@ -47,6 +57,10 @@ void App::Render()
 		ttfps = 1.0F;
 	}
 	ttfps -= time.Delta();
-	mesh->Render(window.GetRenderer());
+	for (auto& gameObject : gameObjects)
+	{
+		gameObject->Render(window.GetRenderer());
+	}
+	//mesh->Render(window.GetRenderer());
 	//window.GetRenderer().RenderTestTriangle(time.Time());
 }

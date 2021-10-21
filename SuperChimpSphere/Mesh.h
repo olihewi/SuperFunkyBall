@@ -4,10 +4,10 @@
 #include <vector>
 #include <memory>
 #include <wrl.h>
-#include "Renderer.h"
+#include "GameComponent.h"
 #include "ConstantBuffer.h"
 #include "GraphicsComponent.h"
-class Mesh
+class Mesh : public GameComponent
 {
 public:
 	Mesh(Renderer& renderer, std::vector<Vector3> _vertices, std::vector<unsigned short> _triangles);

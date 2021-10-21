@@ -84,6 +84,11 @@ Renderer& Window::GetRenderer()
 	return *renderer;
 }
 
+Keyboard& Window::GetKeyboard()
+{
+	return keyboard;
+}
+
 LRESULT WINAPI Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
 	if (msg == WM_NCCREATE)

@@ -151,6 +151,9 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Colour.cpp" />
+    <ClCompile Include="ConstantBuffer.cpp" />
+    <ClCompile Include="GameComponent.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="GraphicsComponent.cpp" />
     <ClCompile Include="InputLayout.cpp" />
@@ -170,6 +173,8 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="Colour.h" />
     <ClInclude Include="ConstantBuffer.h" />
+    <ClInclude Include="GameComponent.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameSettings.h" />
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="GraphicsComponent.h" />

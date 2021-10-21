@@ -113,7 +113,7 @@ Mesh Mesh::CreatePrimitiveSphere(Renderer& renderer, float radius, unsigned shor
         }
     }
     // Bottom
-    unsigned short southPoleIndex = v.size() - 1;
+    unsigned short southPoleIndex = static_cast<unsigned short>(v.size()) - 1;
     baseIndex = southPoleIndex - ringVertexCount;
     for (unsigned short i = 0; i < resolution; i++)
     {

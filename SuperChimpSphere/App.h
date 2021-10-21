@@ -1,7 +1,7 @@
 #pragma once
 #include "Window.h"
 #include "GameTime.h"
-#include "Mesh.h"
+#include "GameObject.h"
 class App
 {
 public:
@@ -14,7 +14,7 @@ private:
 
 	Window window;
 	GameTime time;
-	std::unique_ptr<Mesh> mesh;
+	std::vector<std::unique_ptr<GameObject>> gameObjects;
 	float ttfps = 0;
 };
 

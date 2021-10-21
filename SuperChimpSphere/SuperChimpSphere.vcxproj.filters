@@ -46,6 +46,18 @@
     <Filter Include="Source Files\Engine\Graphics\Components">
       <UniqueIdentifier>{8fcc298f-9904-4605-aca2-a5743c12eb1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\GameObjects">
+      <UniqueIdentifier>{ea8b1e77-7f43-44ae-93f4-5896047211c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\GameObjects">
+      <UniqueIdentifier>{e63bad13-6e6e-4b88-880a-1d3f4c6fb317}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\GameComponents">
+      <UniqueIdentifier>{ef5f0db8-482b-481d-84ac-89c5858fc0f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\GameComponents">
+      <UniqueIdentifier>{2075c090-6729-46a2-a74c-10230f124011}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -72,9 +84,6 @@
     <ClCompile Include="Window.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Vector3.cpp">
       <Filter>Source Files\Engine\Maths</Filter>
     </ClCompile>
@@ -95,6 +104,18 @@
     </ClCompile>
     <ClCompile Include="VertexShader.cpp">
       <Filter>Source Files\Engine\Graphics\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstantBuffer.cpp">
+      <Filter>Source Files\Engine\Graphics\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\Engine\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponent.cpp">
+      <Filter>Source Files\Engine\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Source Files\Engine\GameComponents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,12 +143,6 @@
     <ClInclude Include="Window.h">
       <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="ConstantBuffer.h">
-      <Filter>Header Files\Engine\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Header Files\Engine\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Vector3.h">
       <Filter>Header Files\Engine\Maths</Filter>
     </ClInclude>
@@ -151,6 +166,18 @@
     </ClInclude>
     <ClInclude Include="VertexShader.h">
       <Filter>Header Files\Engine\Graphics\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantBuffer.h">
+      <Filter>Header Files\Engine\Graphics\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files\Engine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponent.h">
+      <Filter>Header Files\Engine\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Header Files\Engine\GameComponents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

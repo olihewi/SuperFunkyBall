@@ -72,60 +72,8 @@ Renderer::Renderer(HWND hWnd)
 
 	context->OMSetRenderTargets(1U, targetView.GetAddressOf(), depthStencilView.Get());
 
-	
-	cb.model = {
-		1.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
-	};
-	cb.view = {
-		-1.00000000f, 0.00000000f,  0.00000000f,  0.00000000f,
-		0.00000000f, 0.89442718f,  0.44721359f,  0.00000000f,
-		0.00000000f, 0.44721359f, -0.89442718f, -2.23606800f,
-		0.00000000f, 0.00000000f,  0.00000000f,  1.00000000f
-	};
-	float xScale = 1.42814801f;
-	float yScale = 1.42814801f;
-	if (depthDesc.Width > depthDesc.Height)
-	{
-		xScale = yScale *
-			static_cast<float>(depthDesc.Height) /
-			static_cast<float>(depthDesc.Width);
-	}
-	else
-	{
-		yScale = xScale *
-			static_cast<float>(depthDesc.Width) /
-			static_cast<float>(depthDesc.Height);
-	}
-	cb.projection = DirectX::XMFLOAT4X4(
-		xScale, 0.0f, 0.0f, 0.0f,
-		0.0f, yScale, 0.0f, 0.0f,
-		0.0f, 0.0f, -1.0f, -0.01f,
-		0.0f, 0.0f, -1.0f, 0.0f
-	);
-	D3D11_BUFFER_DESC constantBufferDesc
-	{
-		sizeof(cb),
-		D3D11_USAGE_DEFAULT,
-		D3D11_BIND_CONSTANT_BUFFER,
-		0U,
-		0U,
-		0U
-	}; 
-	D3D11_SUBRESOURCE_DATA constantBufferSubresourceData{};
-	constantBufferSubresourceData.pSysMem = &cb;
-	device->CreateBuffer(
-		&constantBufferDesc,
-		&constantBufferSubresourceData,
-		&constantBuffer
-	);
-	context->VSSetConstantBuffers(
-		0U,
-		1U,
-		constantBuffer.GetAddressOf()
-	);
+	constantBuffer = std::make_unique<ConstantBuffer>(device.Get(), modelViewProjection);
+	constantBuffer->Load(context.Get(), modelViewProjection);
 }
 
 void Renderer::EndFrame()
@@ -157,4 +105,22 @@ ID3D11Device* Renderer::GetDevice()
 ID3D11DeviceContext* Renderer::GetContext()
 {
 	return context.Get();
+}
+
+void Renderer::SetModelMatrix(const DirectX::XMMATRIX& modelMatrix)
+{
+	modelViewProjection.model = modelMatrix;
+	constantBuffer->Load(context.Get(), modelViewProjection);
+}
+
+void Renderer::SetViewMatrix(const DirectX::XMMATRIX& viewMatrix)
+{
+	modelViewProjection.view = viewMatrix;
+	constantBuffer->Load(context.Get(), modelViewProjection);
+}
+
+void Renderer::SetProjectionMatrix(const DirectX::XMMATRIX& projectionMatrix)
+{
+	modelViewProjection.projection = projectionMatrix;
+	constantBuffer->Load(context.Get(), modelViewProjection);
 }

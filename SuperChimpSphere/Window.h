@@ -32,6 +32,7 @@ public:
 	void SetTitle(const std::string& title);
 	static std::optional<int> ProcessMessages();
 	Renderer& GetRenderer();
+	Keyboard& GetKeyboard();
 private:
 	static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 	static LRESULT CALLBACK HandleMsgProxy(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
