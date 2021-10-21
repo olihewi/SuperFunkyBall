@@ -14,6 +14,7 @@ private:
 
 	Window window;
 	GameTime time;
-	Mesh* mesh;
+	std::unique_ptr<Mesh> mesh;
+	float ttfps = 0;
 };
 

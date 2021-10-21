@@ -40,6 +40,12 @@
     <Filter Include="Source Files\Engine\Graphics">
       <UniqueIdentifier>{e6f85245-46b3-4ddf-a3a1-d613048f041e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Graphics\Components">
+      <UniqueIdentifier>{ab39c216-8056-45d8-ad47-2891ff0f2d9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\Components">
+      <UniqueIdentifier>{8fcc298f-9904-4605-aca2-a5743c12eb1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -72,6 +78,24 @@
     <ClCompile Include="Vector3.cpp">
       <Filter>Source Files\Engine\Maths</Filter>
     </ClCompile>
+    <ClCompile Include="GraphicsComponent.cpp">
+      <Filter>Source Files\Engine\Graphics\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexBuffer.cpp">
+      <Filter>Source Files\Engine\Graphics\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TriangleBuffer.cpp">
+      <Filter>Source Files\Engine\Graphics\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="InputLayout.cpp">
+      <Filter>Source Files\Engine\Graphics\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PixelShader.cpp">
+      <Filter>Source Files\Engine\Graphics\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexShader.cpp">
+      <Filter>Source Files\Engine\Graphics\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Keyboard.h">
@@ -98,9 +122,6 @@
     <ClInclude Include="Window.h">
       <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="VertexShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ConstantBuffer.h">
       <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
@@ -109,6 +130,27 @@
     </ClInclude>
     <ClInclude Include="Vector3.h">
       <Filter>Header Files\Engine\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsComponent.h">
+      <Filter>Header Files\Engine\Graphics\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer.h">
+      <Filter>Header Files\Engine\Graphics\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TriangleBuffer.h">
+      <Filter>Header Files\Engine\Graphics\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="InputLayout.h">
+      <Filter>Header Files\Engine\Graphics\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsComponents.h">
+      <Filter>Header Files\Engine\Graphics\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PixelShader.h">
+      <Filter>Header Files\Engine\Graphics\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexShader.h">
+      <Filter>Header Files\Engine\Graphics\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
