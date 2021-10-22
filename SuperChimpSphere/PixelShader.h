@@ -1,7 +1,8 @@
 #pragma once
-#include "SharedComponent.h"
+#include "GraphicsComponent.h"
 #include <string>
-class PixelShader : public SharedComponent
+#include <unordered_map>
+class PixelShader : public GraphicsComponent
 {
 public:
 	PixelShader(Renderer& renderer, const std::wstring& path);

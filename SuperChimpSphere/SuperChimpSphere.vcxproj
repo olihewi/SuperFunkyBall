@@ -184,7 +184,6 @@
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="Renderer.h" />
-    <ClInclude Include="SharedComponent.h" />
     <ClInclude Include="TriangleBuffer.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="VertexBuffer.h" />

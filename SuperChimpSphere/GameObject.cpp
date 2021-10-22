@@ -13,7 +13,7 @@ void GameObject::Update(Keyboard& keyboard, GameTime& time)
 		component->Update(time);
 	}
 	auto input = keyboard.GetWASD() * (keyboard.GetKey(16 /*shift*/) ? 2.0F : 1.0F);
-	transform *= DirectX::XMMatrixTranslation(-input.x * time.Delta(), 0.0F, input.y * time.Delta());
+	transform *= DirectX::XMMatrixTranslation(-input.x * time.Delta(), (keyboard.GetKey('E') ? 1.0F : keyboard.GetKey('Q') ? -1.0F : 0.0F) * time.Delta(), input.y * time.Delta());
 }
 
 void GameObject::Render(Renderer& renderer)

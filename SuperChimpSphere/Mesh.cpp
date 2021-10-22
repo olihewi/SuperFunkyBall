@@ -13,26 +13,20 @@ void Mesh::Render(Renderer& renderer)
     {
         component->Load(renderer);
     }
-    for (auto& component : sharedComponents)
-    {
-        component->Load(renderer);
-    }
-
     renderer.GetContext()->DrawIndexed(static_cast<UINT>(std::size(triangles)), 0U, 0U);
 }
 
 void Mesh::OnMeshUpdated(Renderer& renderer)
 {
     components.clear();
-    sharedComponents.clear();
-    sharedComponents.push_back(PixelShader::GetOrCreate(renderer, L"PixelShader.cso"));
+    components.push_back(PixelShader::GetOrCreate(renderer, L"PixelShader.cso"));
     const std::vector<D3D11_INPUT_ELEMENT_DESC> elementDesc
     {
         { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 }
     };
-    sharedComponents.push_back(VertexShader::GetOrCreate(renderer, L"VertexShader.cso", elementDesc));
-    components.push_back(std::make_unique<VertexBuffer>(renderer, vertices));
-    components.push_back(std::make_unique<TriangleBuffer>(renderer, triangles));
+    components.push_back(VertexShader::GetOrCreate(renderer, L"VertexShader.cso", elementDesc));
+    components.push_back(std::make_shared<VertexBuffer>(renderer, vertices));
+    components.push_back(std::make_shared<TriangleBuffer>(renderer, triangles));
 }
 
 Mesh Mesh::CreatePrimitiveCube(Renderer& renderer, Vector3 size)

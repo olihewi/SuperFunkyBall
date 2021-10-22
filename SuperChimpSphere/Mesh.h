@@ -6,7 +6,7 @@
 #include <wrl.h>
 #include "GameComponent.h"
 #include "ConstantBuffer.h"
-#include "SharedComponent.h"
+#include "GraphicsComponent.h"
 class Mesh : public GameComponent
 {
 public:
@@ -22,7 +22,6 @@ private:
 	std::vector<unsigned short> triangles;
 	std::vector<DirectX::XMFLOAT2> uvs;
 
-	std::vector<std::unique_ptr<GraphicsComponent>> components;
-	std::vector<std::shared_ptr<SharedComponent>> sharedComponents;
+	std::vector<std::shared_ptr<GraphicsComponent>> components;
 };
 

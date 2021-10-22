@@ -1,8 +1,9 @@
 #pragma once
-#include "SharedComponent.h"
+#include "GraphicsComponent.h"
 #include "InputLayout.h"
 #include <string>
-class VertexShader : public SharedComponent
+#include <unordered_map>
+class VertexShader : public GraphicsComponent
 {
 public:
 	VertexShader(Renderer& renderer, const std::wstring& path, const std::vector<D3D11_INPUT_ELEMENT_DESC>& layout);

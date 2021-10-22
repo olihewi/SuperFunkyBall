@@ -176,9 +176,6 @@
     <ClInclude Include="Mesh.h">
       <Filter>Header Files\Engine\GameComponents</Filter>
     </ClInclude>
-    <ClInclude Include="SharedComponent.h">
-      <Filter>Header Files\Engine\Graphics\Components</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexShader.hlsl">
