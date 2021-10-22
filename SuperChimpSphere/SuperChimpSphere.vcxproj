@@ -155,7 +155,6 @@
     <ClCompile Include="GameComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTime.cpp" />
-    <ClCompile Include="GraphicsComponent.cpp" />
     <ClCompile Include="InputLayout.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -185,6 +184,7 @@
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="SharedComponent.h" />
     <ClInclude Include="TriangleBuffer.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="VertexBuffer.h" />

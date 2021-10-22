@@ -1,6 +1,7 @@
 #include "VertexShader.h"
 #include <d3dcompiler.h>
 
+std::unordered_map<std::wstring, std::shared_ptr<VertexShader>> VertexShader::cache;
 VertexShader::VertexShader(Renderer& renderer, const std::wstring& path)
 {
 	D3DReadFileToBlob(path.c_str(), &blob);
@@ -24,4 +25,10 @@ void VertexShader::Load(Renderer& renderer)
 ID3DBlob* VertexShader::GetBytecode()
 {
 	return blob.Get();
+}
+
+std::shared_ptr<VertexShader> VertexShader::GetOrCreate(Renderer& renderer, const std::wstring& path)
+{
+	cache.try_emplace(path, std::make_shared<VertexShader>(renderer, path));
+	return cache[path];
 }

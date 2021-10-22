@@ -6,7 +6,7 @@
 #include <wrl.h>
 #include "GameComponent.h"
 #include "ConstantBuffer.h"
-#include "GraphicsComponent.h"
+#include "SharedComponent.h"
 class Mesh : public GameComponent
 {
 public:
@@ -23,8 +23,6 @@ private:
 	std::vector<DirectX::XMFLOAT2> uvs;
 
 	std::vector<std::unique_ptr<GraphicsComponent>> components;
-
-	static Microsoft::WRL::ComPtr<ID3D11VertexShader> vertexShader;
-	static Microsoft::WRL::ComPtr<ID3D11PixelShader> pixelShader;
+	std::vector<std::shared_ptr<SharedComponent>> sharedComponents;
 };
 
