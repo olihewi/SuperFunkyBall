@@ -24,14 +24,13 @@ void Mesh::Render(Renderer& renderer)
 void Mesh::OnMeshUpdated(Renderer& renderer)
 {
     components.clear();
+    sharedComponents.clear();
     sharedComponents.push_back(PixelShader::GetOrCreate(renderer, L"PixelShader.cso"));
-    auto vertexShader = VertexShader::GetOrCreate(renderer, L"VertexShader.cso");
     const std::vector<D3D11_INPUT_ELEMENT_DESC> elementDesc
     {
         { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 }
     };
-    components.push_back(std::make_unique<InputLayout>(renderer, elementDesc, vertexShader->GetBytecode()));
-    sharedComponents.push_back(std::move(vertexShader));
+    sharedComponents.push_back(VertexShader::GetOrCreate(renderer, L"VertexShader.cso", elementDesc));
     components.push_back(std::make_unique<VertexBuffer>(renderer, vertices));
     components.push_back(std::make_unique<TriangleBuffer>(renderer, triangles));
 }

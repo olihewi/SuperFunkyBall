@@ -2,7 +2,8 @@
 #include <d3dcompiler.h>
 
 std::unordered_map<std::wstring, std::shared_ptr<VertexShader>> VertexShader::cache;
-VertexShader::VertexShader(Renderer& renderer, const std::wstring& path)
+
+VertexShader::VertexShader(Renderer& renderer, const std::wstring& path, const std::vector<D3D11_INPUT_ELEMENT_DESC>& layout)
 {
 	D3DReadFileToBlob(path.c_str(), &blob);
 	renderer.GetDevice()->CreateVertexShader(
@@ -11,10 +12,12 @@ VertexShader::VertexShader(Renderer& renderer, const std::wstring& path)
 		nullptr, // 
 		&vertexShader // Vertex shader
 	);
+	inputLayout = std::make_unique<InputLayout>(renderer, layout, blob.Get());
 }
 
 void VertexShader::Load(Renderer& renderer)
 {
+	inputLayout->Load(renderer);
 	renderer.GetContext()->VSSetShader(
 		vertexShader.Get(), // Vertex Shader
 		nullptr, // Class instances
@@ -22,13 +25,8 @@ void VertexShader::Load(Renderer& renderer)
 	);
 }
 
-ID3DBlob* VertexShader::GetBytecode()
+std::shared_ptr<VertexShader> VertexShader::GetOrCreate(Renderer& renderer, const std::wstring& path, const std::vector<D3D11_INPUT_ELEMENT_DESC>& layout)
 {
-	return blob.Get();
-}
-
-std::shared_ptr<VertexShader> VertexShader::GetOrCreate(Renderer& renderer, const std::wstring& path)
-{
-	cache.try_emplace(path, std::make_shared<VertexShader>(renderer, path));
+	cache.try_emplace(path, std::make_shared<VertexShader>(renderer, path, layout));
 	return cache[path];
 }
