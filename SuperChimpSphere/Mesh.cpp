@@ -1,7 +1,7 @@
 #include "Mesh.h"
 #include <cmath>
 #include "GraphicsComponents.h"
-#include "OBJ_Loader.h"
+#include "OBJLoader.h"
 
 Mesh::Mesh(Renderer& renderer, std::vector<Vector3> _vertices, std::vector<unsigned short> _triangles, std::vector<Vector2> _uvs) : vertices(_vertices), triangles(_triangles), uvs(_uvs)
 {
@@ -14,13 +14,19 @@ Mesh::Mesh(Renderer& renderer, std::string filePath)
     loader.LoadFile(filePath);
     for (auto& vertex : loader.LoadedVertices)
     {
-        vertices.push_back({ vertex.Position.X, vertex.Position.Y, vertex.Position.Z });
-        uvs.push_back({ vertex.TextureCoordinate.X, vertex.TextureCoordinate.Y });
+        vertices.push_back(vertex.Position);
+        uvs.push_back(vertex.TextureCoordinate);
     }
-    for (auto& tri : loader.LoadedIndices)
+    for (size_t i = 0; i < loader.LoadedIndices.size(); i += 3)
     {
-        triangles.push_back(static_cast<unsigned short>(tri));
+        triangles.push_back(static_cast<unsigned short>(loader.LoadedIndices[i]));
+        triangles.push_back(static_cast<unsigned short>(loader.LoadedIndices[i+2]));
+        triangles.push_back(static_cast<unsigned short>(loader.LoadedIndices[i+1]));
     }
+    /*for (auto& index : loader.LoadedIndices)
+    {
+        triangles.push_back(static_cast<unsigned short>(index));
+    }*/
     OnMeshUpdated(renderer);
 }
 
@@ -52,7 +58,7 @@ void Mesh::OnMeshUpdated(Renderer& renderer)
     components.push_back(VertexShader::GetOrCreate(renderer, L"VertexShader.cso", elementDesc));
     components.push_back(std::make_shared<VertexBuffer>(renderer, v));
     components.push_back(std::make_shared<TriangleBuffer>(renderer, triangles));
-    components.push_back(Texture::GetOrCreate(renderer, L"Textures/UV_Checker.png"));
+    components.push_back(Texture::GetOrCreate(renderer, L"Models/dog.png"));
     components.push_back(std::make_shared<Sampler>(renderer));
 }
 

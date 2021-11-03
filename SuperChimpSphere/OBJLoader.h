@@ -26,6 +26,7 @@
 //	is needed and used for the OBJ Model Loader
 namespace objl
 {
+	/*
 	// Structure: Vector2
 	//
 	// Description: A 2D Vector that Holds Positional Data
@@ -128,7 +129,7 @@ namespace objl
 		float X;
 		float Y;
 		float Z;
-	};
+	};*/
 
 	// Structure: Vertex
 	//
@@ -224,21 +225,21 @@ namespace objl
 		// Vector3 Cross Product
 		Vector3 CrossV3(const Vector3 a, const Vector3 b)
 		{
-			return Vector3(a.Y * b.Z - a.Z * b.Y,
-				a.Z * b.X - a.X * b.Z,
-				a.X * b.Y - a.Y * b.X);
+			return Vector3(a.y * b.z - a.z * b.y,
+				a.z * b.x - a.x * b.z,
+				a.x * b.y - a.y * b.x);
 		}
 
 		// Vector3 Magnitude Calculation
 		float MagnitudeV3(const Vector3 in)
 		{
-			return (sqrtf(powf(in.X, 2) + powf(in.Y, 2) + powf(in.Z, 2)));
+			return (sqrtf(powf(in.x, 2) + powf(in.y, 2) + powf(in.z, 2)));
 		}
 
 		// Vector3 DotProduct
 		float DotV3(const Vector3 a, const Vector3 b)
 		{
-			return (a.X * b.X) + (a.Y * b.Y) + (a.Z * b.Z);
+			return (a.x * b.x) + (a.y * b.y) + (a.z * b.z);
 		}
 
 		// Angle between 2 Vector3 Objects
@@ -266,7 +267,7 @@ namespace objl
 		// Vector3 Multiplication Opertor Overload
 		Vector3 operator*(const float& left, const Vector3& right)
 		{
-			return Vector3(right.X * left, right.Y * left, right.Z * left);
+			return Vector3(right.x * left, right.y * left, right.x * left);
 		}
 
 		// A test to see if P1 is on the same side as P2 of a line segment ab
@@ -542,9 +543,9 @@ namespace objl
 					Vector3 vpos;
 					algorithm::split(algorithm::tail(curline), spos, " ");
 
-					vpos.X = std::stof(spos[0]);
-					vpos.Y = std::stof(spos[1]);
-					vpos.Z = std::stof(spos[2]);
+					vpos.x = std::stof(spos[0]);
+					vpos.y = std::stof(spos[1]);
+					vpos.z = std::stof(spos[2]);
 
 					Positions.push_back(vpos);
 				}
@@ -555,8 +556,8 @@ namespace objl
 					Vector2 vtex;
 					algorithm::split(algorithm::tail(curline), stex, " ");
 
-					vtex.X = std::stof(stex[0]);
-					vtex.Y = std::stof(stex[1]);
+					vtex.x = std::stof(stex[0]);
+					vtex.y = std::stof(stex[1]);
 
 					TCoords.push_back(vtex);
 				}
@@ -567,9 +568,9 @@ namespace objl
 					Vector3 vnor;
 					algorithm::split(algorithm::tail(curline), snor, " ");
 
-					vnor.X = std::stof(snor[0]);
-					vnor.Y = std::stof(snor[1]);
-					vnor.Z = std::stof(snor[2]);
+					vnor.x = std::stof(snor[0]);
+					vnor.y = std::stof(snor[1]);
+					vnor.z = std::stof(snor[2]);
 
 					Normals.push_back(vnor);
 				}
@@ -1068,9 +1069,9 @@ namespace objl
 					if (temp.size() != 3)
 						continue;
 
-					tempMaterial.Ka.X = std::stof(temp[0]);
-					tempMaterial.Ka.Y = std::stof(temp[1]);
-					tempMaterial.Ka.Z = std::stof(temp[2]);
+					tempMaterial.Ka.x = std::stof(temp[0]);
+					tempMaterial.Ka.y = std::stof(temp[1]);
+					tempMaterial.Ka.z = std::stof(temp[2]);
 				}
 				// Diffuse Color
 				if (algorithm::firstToken(curline) == "Kd")
@@ -1081,9 +1082,9 @@ namespace objl
 					if (temp.size() != 3)
 						continue;
 
-					tempMaterial.Kd.X = std::stof(temp[0]);
-					tempMaterial.Kd.Y = std::stof(temp[1]);
-					tempMaterial.Kd.Z = std::stof(temp[2]);
+					tempMaterial.Kd.x = std::stof(temp[0]);
+					tempMaterial.Kd.y = std::stof(temp[1]);
+					tempMaterial.Kd.z = std::stof(temp[2]);
 				}
 				// Specular Color
 				if (algorithm::firstToken(curline) == "Ks")
@@ -1094,9 +1095,9 @@ namespace objl
 					if (temp.size() != 3)
 						continue;
 
-					tempMaterial.Ks.X = std::stof(temp[0]);
-					tempMaterial.Ks.Y = std::stof(temp[1]);
-					tempMaterial.Ks.Z = std::stof(temp[2]);
+					tempMaterial.Ks.x = std::stof(temp[0]);
+					tempMaterial.Ks.y = std::stof(temp[1]);
+					tempMaterial.Ks.z = std::stof(temp[2]);
 				}
 				// Specular Exponent
 				if (algorithm::firstToken(curline) == "Ns")

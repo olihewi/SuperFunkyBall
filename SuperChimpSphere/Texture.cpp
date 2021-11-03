@@ -1,12 +1,13 @@
 #include "Texture.h"
-#include "GDIManager.h"
+#include "WICTextureLoader.h"
 
 std::unordered_map<std::wstring, std::shared_ptr<Texture>> Texture::cache;
 
 Texture::Texture(Renderer& renderer, const std::wstring& path, unsigned int _slot) : slot(_slot)
 {
 	//Gdiplus::Bitmap bmp(path.c_str());
-	auto width = 256U; //bmp.GetWidth();
+	HRESULT result = DirectX::CreateWICTextureFromFile(renderer.GetDevice(), path.c_str(), NULL, &shaderResourceView);
+	/*auto width = 256U; //bmp.GetWidth();
 	auto height = 256U; //bmp.GetHeight();
 	pixels = std::make_unique<Colour[]>(width * height);
 	//Gdiplus::Color pixel;
@@ -53,7 +54,7 @@ Texture::Texture(Renderer& renderer, const std::wstring& path, unsigned int _slo
 		texture.Get(), &shaderResourceViewDesc, &shaderResourceView
 	);
 
-	renderer.GetContext()->GenerateMips(shaderResourceView.Get());
+	renderer.GetContext()->GenerateMips(shaderResourceView.Get());*/
 }
 
 void Texture::Load(Renderer& renderer)

@@ -1,6 +1,7 @@
 #pragma once
 struct Vector3
 {
+	Vector3();
 	Vector3(float _x, float _y, float _z);
 	Vector3(const Vector3& other);
 	Vector3& operator+=(const Vector3& v);
@@ -48,6 +49,7 @@ namespace Vector3s
 
 struct Vector2
 {
+	Vector2();
 	Vector2(float _x, float _y);
 	Vector2(const Vector2& other);
 	Vector2& operator+=(const Vector2& v);
