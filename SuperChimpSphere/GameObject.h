@@ -14,4 +14,3 @@ private:
 	DirectX::XMMATRIX transform = DirectX::XMMatrixIdentity() * DirectX::XMMatrixTranslation(0.0F,0.0F,1.0F);
 	std::vector<std::unique_ptr<GameComponent>> components;
 };
-

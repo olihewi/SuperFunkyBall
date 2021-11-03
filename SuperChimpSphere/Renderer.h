@@ -20,6 +20,7 @@ public:
 	void SetModelMatrix(const DirectX::XMMATRIX& modelMatrix);
 	void SetViewMatrix(const DirectX::XMMATRIX& viewMatrix);
 	void SetProjectionMatrix(const DirectX::XMMATRIX& projectionMatrix);
+	DirectX::XMMATRIX GetViewMatrix();
 private:
 	Microsoft::WRL::ComPtr<ID3D11Device> device;
 	Microsoft::WRL::ComPtr<IDXGISwapChain> swapChain;

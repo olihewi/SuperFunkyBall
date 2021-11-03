@@ -1,4 +1,5 @@
 #include "App.h"
+#include "Mesh.h"
 
 App::App(const GameSettings& _settings) : settings(_settings), window(static_cast<int>(settings.video.resolution.x),static_cast<int>(settings.video.resolution.y),"ASGE")
 {
@@ -41,6 +42,9 @@ void App::Update()
 	{
 		gameObject->Update(window.GetKeyboard(), time);
 	}
+	window.GetRenderer().SetViewMatrix(window.GetRenderer().GetViewMatrix() *
+		DirectX::XMMatrixRotationX(window.GetKeyboard().GetIJKL().y * time.Delta()) * 
+		DirectX::XMMatrixRotationY(window.GetKeyboard().GetIJKL().x * time.Delta()));
 }
 
 void App::Render()

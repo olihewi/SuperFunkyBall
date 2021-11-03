@@ -2,15 +2,18 @@
 struct Colour
 {
 public:
+	Colour();
 	Colour(float _r, float _g, float _b);
 	Colour(float _r, float _g, float _b, float _a);
 	Colour(int _r, int _g, int _b);
 	Colour(int _r, int _g, int _b, int _a);
-	float* Array();
-	float r = 1.0F;
-	float g = 1.0F;
-	float b = 1.0F;
-	float a = 1.0F;
+	Colour(unsigned char _r, unsigned char _g, unsigned char _b);
+	Colour(unsigned char _r, unsigned char _g, unsigned char _b, unsigned char _a);
+	unsigned char* Array();
+	unsigned char r = 255;
+	unsigned char g = 255;
+	unsigned char b = 255;
+	unsigned char a = 255;
 };
 
 namespace Colours

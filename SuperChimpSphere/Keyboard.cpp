@@ -13,6 +13,13 @@ void Keyboard::SetKey(int key, bool current)
 Vector2 Keyboard::GetWASD()
 {
 	return Vector2(
-		GetKey('A') ? -1.0F : GetKey('D') ? 1.0F : 0.0F,
-		GetKey('S') ? -1.0F : GetKey('W') ? 1.0F : 0.0F);
+		static_cast<float>(GetKey('D')) - static_cast<float>(GetKey('A')),
+		static_cast<float>(GetKey('W')) - static_cast<float>(GetKey('S')));
+}
+
+Vector2 Keyboard::GetIJKL()
+{
+	return Vector2(
+		static_cast<float>(GetKey('J')) - static_cast<float>(GetKey('L')),
+		static_cast<float>(GetKey('I')) - static_cast<float>(GetKey('K')));
 }

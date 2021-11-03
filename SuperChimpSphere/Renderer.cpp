@@ -78,8 +78,8 @@ Renderer::Renderer(HWND hWnd)
 	constantBuffer->Load(context.Get(), modelViewProjection);
 
 	D3D11_VIEWPORT viewport;
-	viewport.Width = depthDesc.Width;
-	viewport.Height = depthDesc.Height;
+	viewport.Width = static_cast<float>(depthDesc.Width);
+	viewport.Height = static_cast<float>(depthDesc.Height);
 	viewport.MinDepth = 0;
 	viewport.MaxDepth = 1;
 	viewport.TopLeftX = 0;
@@ -91,7 +91,11 @@ Renderer::Renderer(HWND hWnd)
 
 void Renderer::EndFrame()
 {
-	const float color[]{ backgroundColour.r,backgroundColour.g,backgroundColour.b,backgroundColour.a };
+	const float color[]{ 
+		static_cast<float>(backgroundColour.r) / 255.0F,
+		static_cast<float>(backgroundColour.g) / 255.0F,
+		static_cast<float>(backgroundColour.b) / 255.0F,
+		static_cast<float>(backgroundColour.a) / 255.0F };
 	swapChain->Present(1u, 0u);
 	context->ClearDepthStencilView(depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0F, 0U);
 	context->ClearRenderTargetView(targetView.Get(), color); 
@@ -128,4 +132,9 @@ void Renderer::SetProjectionMatrix(const DirectX::XMMATRIX& projectionMatrix)
 {
 	modelViewProjection.projection = DirectX::XMMatrixTranspose(projectionMatrix);
 	constantBuffer->Load(context.Get(), modelViewProjection);
+}
+
+DirectX::XMMATRIX Renderer::GetViewMatrix()
+{
+	return DirectX::XMMatrixTranspose(modelViewProjection.view);
 }
