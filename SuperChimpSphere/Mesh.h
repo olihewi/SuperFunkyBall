@@ -11,7 +11,7 @@
 class Mesh : public GameComponent
 {
 public:
-	Mesh(Renderer& renderer, std::vector<Vector3> _vertices, std::vector<unsigned int> _triangles, std::vector<Vector2> _uvs);
+	Mesh(Renderer& renderer, std::vector<Vector3> _vertices, std::vector<unsigned int> _triangles, std::vector<Vector2> _uvs, std::wstring _texturePath = L"Textures/UV_Checker.png");
 	Mesh(Renderer& renderer, std::string filePath, std::wstring _texturePath);
 	void Render(Renderer& renderer);
 private:

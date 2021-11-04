@@ -5,7 +5,7 @@
 #include <locale>
 #include <codecvt>
 
-Mesh::Mesh(Renderer& renderer, std::vector<Vector3> _vertices, std::vector<unsigned int> _triangles, std::vector<Vector2> _uvs) : vertices(_vertices), triangles(_triangles), uvs(_uvs)
+Mesh::Mesh(Renderer& renderer, std::vector<Vector3> _vertices, std::vector<unsigned int> _triangles, std::vector<Vector2> _uvs, std::wstring _texturePath) : vertices(_vertices), triangles(_triangles), uvs(_uvs), texturePath(_texturePath)
 {
     OnMeshUpdated(renderer);
 }

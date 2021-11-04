@@ -135,6 +135,15 @@
     <ClCompile Include="Skybox.cpp">
       <Filter>Source Files\Engine\GameComponents</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Engine\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics.cpp">
+      <Filter>Source Files\Engine\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Keyboard.h">
@@ -223,6 +232,15 @@
     </ClInclude>
     <ClInclude Include="Skybox.h">
       <Filter>Header Files\Engine\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Engine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
+      <Filter>Header Files\Engine\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Header Files\Engine\Maths</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

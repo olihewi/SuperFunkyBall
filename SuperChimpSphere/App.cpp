@@ -1,6 +1,7 @@
 #include "App.h"
 #include "Model.h"
 #include "Camera.h"
+#include "Player.h"
 
 App::App(const GameSettings& _settings) : settings(_settings), window(static_cast<int>(settings.video.resolution.x),static_cast<int>(settings.video.resolution.y),"ASGE")
 {
@@ -14,7 +15,8 @@ App::App(const GameSettings& _settings) : settings(_settings), window(static_cas
 		DirectX::XMMatrixIdentity));*/
 	//mesh = std::make_unique<Mesh>(Mesh::CreatePrimitiveSphere(window.GetRenderer(), 1.0F, 20U));
 	gameObjects.push_back(std::make_unique<Camera>(window.GetRenderer()));
-	gameObjects.push_back(std::make_unique<Model>(window.GetRenderer(), "Models/dog.obj", L"Models/dog.png"));
+	gameObjects.push_back(std::make_unique<Player>(window.GetRenderer()));
+	//gameObjects.push_back(std::make_unique<Model>(window.GetRenderer(), "Models/dog.obj", L"Models/dog.png"));
 }
 
 int App::Play()

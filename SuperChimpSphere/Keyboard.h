@@ -8,6 +8,7 @@ public:
 	void SetKey(int key, bool current);
 	Vector2 GetWASD();
 	Vector2 GetIJKL();
+	Vector2 GetArrowKeys();
 private:
 	static constexpr unsigned int NUMBER_OF_KEYS = 256u;
 	std::bitset<NUMBER_OF_KEYS> keyStates;

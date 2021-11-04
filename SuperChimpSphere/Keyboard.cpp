@@ -23,3 +23,10 @@ Vector2 Keyboard::GetIJKL()
 		static_cast<float>(GetKey('J')) - static_cast<float>(GetKey('L')),
 		static_cast<float>(GetKey('I')) - static_cast<float>(GetKey('K')));
 }
+
+Vector2 Keyboard::GetArrowKeys()
+{
+	return Vector2(
+		static_cast<float>(GetKey('H')) - static_cast<float>(GetKey('F')),
+		static_cast<float>(GetKey('T')) - static_cast<float>(GetKey('G')));
+}

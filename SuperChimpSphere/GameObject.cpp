@@ -16,7 +16,7 @@ void GameObject::Update(Keyboard& keyboard, GameTime& time)
 
 void GameObject::Render(Renderer& renderer)
 {
-	renderer.SetModelMatrix(transform);
+	transform.ApplyMatrix(renderer);
 	for (auto& component : components)
 	{
 		component->Render(renderer);
