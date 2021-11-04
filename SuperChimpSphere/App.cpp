@@ -1,5 +1,6 @@
 #include "App.h"
-#include "Mesh.h"
+#include "Model.h"
+#include "Camera.h"
 
 App::App(const GameSettings& _settings) : settings(_settings), window(static_cast<int>(settings.video.resolution.x),static_cast<int>(settings.video.resolution.y),"ASGE")
 {
@@ -12,7 +13,8 @@ App::App(const GameSettings& _settings) : settings(_settings), window(static_cas
 		},
 		DirectX::XMMatrixIdentity));*/
 	//mesh = std::make_unique<Mesh>(Mesh::CreatePrimitiveSphere(window.GetRenderer(), 1.0F, 20U));
-	gameObjects.push_back(std::make_unique<GameObject>(window.GetRenderer()));
+	gameObjects.push_back(std::make_unique<Camera>(window.GetRenderer()));
+	gameObjects.push_back(std::make_unique<Model>(window.GetRenderer(), "Models/dog.obj", L"Models/dog.png"));
 }
 
 int App::Play()
@@ -42,9 +44,6 @@ void App::Update()
 	{
 		gameObject->Update(window.GetKeyboard(), time);
 	}
-	window.GetRenderer().SetViewMatrix(window.GetRenderer().GetViewMatrix() *
-		DirectX::XMMatrixRotationX(window.GetKeyboard().GetIJKL().y * time.Delta()) * 
-		DirectX::XMMatrixRotationY(window.GetKeyboard().GetIJKL().x * time.Delta()));
 }
 
 void App::Render()

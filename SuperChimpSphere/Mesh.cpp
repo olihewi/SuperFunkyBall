@@ -2,16 +2,18 @@
 #include <cmath>
 #include "GraphicsComponents.h"
 #include "OBJLoader.h"
+#include <locale>
+#include <codecvt>
 
 Mesh::Mesh(Renderer& renderer, std::vector<Vector3> _vertices, std::vector<unsigned int> _triangles, std::vector<Vector2> _uvs) : vertices(_vertices), triangles(_triangles), uvs(_uvs)
 {
     OnMeshUpdated(renderer);
 }
 
-Mesh::Mesh(Renderer& renderer, std::string filePath)
+Mesh::Mesh(Renderer& renderer, std::string modelPath, std::wstring _texturePath) : texturePath(_texturePath)
 {
     objl::Loader loader;
-    loader.LoadFile(filePath);
+    loader.LoadFile(modelPath);
     for (auto& vertex : loader.LoadedVertices)
     {
         vertices.push_back(vertex.Position);
@@ -46,15 +48,11 @@ void Mesh::OnMeshUpdated(Renderer& renderer)
     {
         v.push_back(Vertex(vertices[i], i < j ? uvs[i] : Vector2s::zero));
     }
-    const std::vector<D3D11_INPUT_ELEMENT_DESC> elementDesc
-    {
-        { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-        { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
-    };
+
     components.push_back(VertexShader::GetOrCreate(renderer, L"VertexShader.cso", elementDesc));
     components.push_back(std::make_shared<VertexBuffer>(renderer, v));
     components.push_back(std::make_shared<TriangleBuffer>(renderer, triangles));
-    components.push_back(Texture::GetOrCreate(renderer, L"Models/dog.png"));
+    components.push_back(Texture::GetOrCreate(renderer, texturePath));
     components.push_back(std::make_shared<Sampler>(renderer));
 }
 

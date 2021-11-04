@@ -1,10 +1,9 @@
 #pragma once
 #include "GameObject.h"
-class Camera : public GameObject
+class Model : public GameObject
 {
 public:
-	Camera(Renderer& renderer);
+	Model(Renderer& renderer, std::string modelPath, std::wstring texturePath);
 	void Update(Keyboard& keyboard, GameTime& time) override;
-	void Render(Renderer& renderer) override;
 };
 
