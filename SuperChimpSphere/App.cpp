@@ -3,7 +3,7 @@
 #include "Camera.h"
 #include "Player.h"
 
-App::App(const GameSettings& _settings) : settings(_settings), window(static_cast<int>(settings.video.resolution.x),static_cast<int>(settings.video.resolution.y),"ASGE")
+App::App(const GameSettings& _settings) : settings(_settings), window(static_cast<int>(settings.video.resolution.x),static_cast<int>(settings.video.resolution.y),"ASGE"), input(window)
 {
 	//auto mesh = std::make_unique<Mesh>(Mesh::CreatePrimitiveSphere(window.GetRenderer(), 1.0F, 20U));
 	//gameObjects.push_back(std::make_unique<GameObject>(std::move(mesh)));
@@ -42,9 +42,10 @@ void App::GameLoop()
 void App::Update()
 {
 	time.Tick();
+	input.Tick();
 	for (auto& gameObject : gameObjects)
 	{
-		gameObject->Update(window.GetKeyboard(), time);
+		gameObject->Update(input, time);
 	}
 }
 

@@ -1,8 +1,8 @@
 #pragma once
 #include "GameSettings.h"
-#include "Window.h"
 #include "GameTime.h"
 #include "GameObject.h"
+#include "Input.h"
 class App
 {
 public:
@@ -15,6 +15,7 @@ private:
 
 	GameSettings settings;
 	Window window;
+	Input input;
 	GameTime time;
 	std::vector<std::unique_ptr<GameObject>> gameObjects;
 	float ttfps = 0;

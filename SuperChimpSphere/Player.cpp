@@ -9,12 +9,12 @@ Player::Player(Renderer& renderer)
 	physics = dynamic_cast<Physics*>(components.back().get());
 }
 
-void Player::Update(Keyboard& keyboard, GameTime& time)
+void Player::Update(Input& input, GameTime& time)
 {
-	GameObject::Update(keyboard, time);
-	auto input = keyboard.GetWASD() * time.Delta() * 4.0F;
-	input.x *= -1.0F;
-	physics->velocity += Vector3(input.x, 0.0F, input.y);
+	GameObject::Update(input, time);
+	auto movement = input.GetMovement() * time.Delta() * 4.0F;
+	movement.x *= -1.0F;
+	physics->velocity += Vector3(movement.x, 0.0F, movement.y);
 	//transform.rotation = DirectX::XMQuaternionRotationAxis({ physics->velocity.Normalized().x,physics->velocity.Normalized().y, physics->velocity.Normalized().z }, 1.0F);
 	transform.rotation.z -= physics->velocity.x * 0.025F;
 	transform.rotation.x += physics->velocity.z * 0.025F;

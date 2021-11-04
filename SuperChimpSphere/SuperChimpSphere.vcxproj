@@ -158,6 +158,7 @@
     <ClCompile Include="GameComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTime.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="InputLayout.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Sampler.cpp" />
     <ClCompile Include="Skybox.cpp" />
+    <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TriangleBuffer.cpp" />
@@ -182,6 +184,7 @@
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Collider.h" />
     <ClInclude Include="Colour.h" />
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="Controller.h" />
@@ -191,6 +194,7 @@
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="GraphicsComponent.h" />
     <ClInclude Include="GraphicsComponents.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="InputLayout.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Mesh.h" />
@@ -203,6 +207,7 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Sampler.h" />
     <ClInclude Include="Skybox.h" />
+    <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="TriangleBuffer.h" />

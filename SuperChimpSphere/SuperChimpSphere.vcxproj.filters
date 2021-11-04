@@ -58,6 +58,12 @@
     <Filter Include="Source Files\Engine\GameComponents">
       <UniqueIdentifier>{2075c090-6729-46a2-a74c-10230f124011}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\GameComponents\Colliders">
+      <UniqueIdentifier>{e9fd08e6-92f1-4cf9-8c97-6d7b35b1f8fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\GameComponents\Colliders">
+      <UniqueIdentifier>{4e9d830b-9cf8-4dc4-b8a5-187a35bd3af9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -141,8 +147,14 @@
     <ClCompile Include="Physics.cpp">
       <Filter>Source Files\Engine\GameComponents</Filter>
     </ClCompile>
+    <ClCompile Include="SphereCollider.cpp">
+      <Filter>Source Files\Engine\GameComponents\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Source Files\Engine\Input</Filter>
+    </ClCompile>
     <ClCompile Include="Transform.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Engine\Maths</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +253,15 @@
     </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>Header Files\Engine\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Header Files\Engine\GameComponents\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereCollider.h">
+      <Filter>Header Files\Engine\GameComponents\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

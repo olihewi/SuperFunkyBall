@@ -5,14 +5,9 @@ bool Mouse::GetButton(int button)
     return current_state[button];
 }
 
-float Mouse::GetX()
+Vector2 Mouse::GetPos()
 {
-    return x;
-}
-
-float Mouse::GetY()
-{
-    return y;
+    return pos;
 }
 
 void Mouse::SetButton(int button, bool state)
@@ -20,8 +15,38 @@ void Mouse::SetButton(int button, bool state)
     current_state[button] = state;
 }
 
-void Mouse::SetPosition(float _x, float _y)
+void Mouse::HandleLButtonDown(WPARAM w, LPARAM l)
 {
-    x = _x;
-    y = _y;
+    current_state[0] = true;
+}
+
+void Mouse::HandleLButtonUp(WPARAM w, LPARAM l)
+{
+    current_state[0] = false;
+}
+
+void Mouse::HandleRButtonDown(WPARAM w, LPARAM l)
+{
+    current_state[1] = true;
+}
+
+void Mouse::HandleRButtonUp(WPARAM w, LPARAM l)
+{
+    current_state[1] = false;
+}
+
+void Mouse::HandleMButtonDown(WPARAM w, LPARAM l)
+{
+    current_state[2] = true;
+}
+
+void Mouse::HandleMButtonUp(WPARAM w, LPARAM l)
+{
+    current_state[2] = false;
+}
+
+void Mouse::HandleMouseMove(WPARAM w, LPARAM l)
+{
+    POINTS pt = MAKEPOINTS(l);
+    pos = Vector2(pt.x, pt.y);
 }

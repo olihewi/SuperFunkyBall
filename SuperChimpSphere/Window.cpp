@@ -79,14 +79,14 @@ std::optional<int> Window::ProcessMessages()
 	return {};
 }
 
+void Window::AddMessageSubscriber(UINT _messageID, std::function<void(WPARAM, LPARAM)> _function)
+{
+	messageSubscribers.insert(std::make_pair(_messageID, _function));
+}
+
 Renderer& Window::GetRenderer()
 {
 	return *renderer;
-}
-
-Keyboard& Window::GetKeyboard()
-{
-	return keyboard;
 }
 
 LRESULT WINAPI Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
@@ -110,37 +110,15 @@ LRESULT WINAPI Window::HandleMsgProxy(HWND hWnd, UINT msg, WPARAM wParam, LPARAM
 
 LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
-	switch (msg)
+	for (auto& subscriberPair : messageSubscribers)
 	{
-	case WM_KEYDOWN:
-		keyboard.SetKey(wParam, true);
-		break;
-	case WM_KEYUP:
-		keyboard.SetKey(wParam, false);
-		break;
-	case WM_LBUTTONDOWN:
-		mouse.SetButton(0, true);
-		break;
-	case WM_LBUTTONUP:
-		mouse.SetButton(0, false);
-		break;
-	case WM_RBUTTONDOWN:
-		mouse.SetButton(1, true);
-		break;
-	case WM_RBUTTONUP:
-		mouse.SetButton(1, false);
-		break;
-	case WM_MBUTTONDOWN:
-		mouse.SetButton(2, true);
-		break;
-	case WM_MBUTTONUP:
-		mouse.SetButton(2, false);
-		break;
-	case WM_MOUSEMOVE:
-		POINTS pt = MAKEPOINTS(lParam);
-		mouse.SetPosition(pt.x, pt.y);
-		break;
-	case WM_CLOSE:
+		if (subscriberPair.first == msg)
+		{
+			subscriberPair.second(wParam, lParam);
+		}
+	}
+	if (msg == WM_CLOSE)
+	{
 		PostQuitMessage(0);
 		return 0;
 	}

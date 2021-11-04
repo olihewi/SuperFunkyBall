@@ -13,6 +13,6 @@ public:
 	Vector3 velocity = Vector3s::zero;
 	float drag = 2.0F;
 	float mass = 1.0F;
-	const float gravityMultiplier = 9.81F;
+	const float gravityMultiplier = 0.0F;// 9.81F;
 };
 

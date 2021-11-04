@@ -6,7 +6,7 @@ void GameObject::AddComponent(std::unique_ptr<GameComponent> _component)
 	components.push_back(std::move(_component));
 }
 
-void GameObject::Update(Keyboard& keyboard, GameTime& time)
+void GameObject::Update(Input& input, GameTime& time)
 {
 	for (auto& component : components)
 	{

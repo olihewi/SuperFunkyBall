@@ -4,8 +4,7 @@
 #include <optional>
 #include <memory>
 #include "Renderer.h"
-#include "Keyboard.h"
-#include "Mouse.h"
+#include <functional>
 
 class Window
 {
@@ -31,8 +30,8 @@ public:
 	Window& operator=(const Window&) = delete;
 	void SetTitle(const std::string& title);
 	static std::optional<int> ProcessMessages();
+	void AddMessageSubscriber(UINT _messageID, std::function<void(WPARAM,LPARAM)> _function);
 	Renderer& GetRenderer();
-	Keyboard& GetKeyboard();
 private:
 	static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 	static LRESULT CALLBACK HandleMsgProxy(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
@@ -41,7 +40,6 @@ private:
 	int width;
 	int height;
 	HWND hWnd;
-	Keyboard keyboard;
-	Mouse mouse;
 	std::unique_ptr<Renderer> renderer;
+	std::unordered_map<UINT,std::function<void(WPARAM, LPARAM)>> messageSubscribers;
 };

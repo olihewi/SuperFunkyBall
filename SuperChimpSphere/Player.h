@@ -5,7 +5,7 @@ class Player : public GameObject
 {
 public:
 	Player(Renderer& renderer);
-	void Update(Keyboard& keyboard, GameTime& time) override;
+	void Update(Input& input, GameTime& time) override;
 private:
 	Physics* physics;
 };

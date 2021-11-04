@@ -7,7 +7,7 @@ Camera::Camera(Renderer& renderer)
 	//transform = renderer.GetViewMatrix();
 }
 
-void Camera::Update(Keyboard& keyboard, GameTime& time)
+void Camera::Update(Input& input, GameTime& time)
 {
 	/*auto input = keyboard.GetIJKL() * (keyboard.GetKey(16) ? 2.0F : 1.0F);
 	auto input2 = keyboard.GetArrowKeys() * time.Delta();
