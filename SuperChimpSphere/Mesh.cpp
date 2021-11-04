@@ -3,7 +3,7 @@
 #include "GraphicsComponents.h"
 #include "OBJLoader.h"
 
-Mesh::Mesh(Renderer& renderer, std::vector<Vector3> _vertices, std::vector<unsigned short> _triangles, std::vector<Vector2> _uvs) : vertices(_vertices), triangles(_triangles), uvs(_uvs)
+Mesh::Mesh(Renderer& renderer, std::vector<Vector3> _vertices, std::vector<unsigned int> _triangles, std::vector<Vector2> _uvs) : vertices(_vertices), triangles(_triangles), uvs(_uvs)
 {
     OnMeshUpdated(renderer);
 }
@@ -19,14 +19,10 @@ Mesh::Mesh(Renderer& renderer, std::string filePath)
     }
     for (size_t i = 0; i < loader.LoadedIndices.size(); i += 3)
     {
-        triangles.push_back(static_cast<unsigned short>(loader.LoadedIndices[i]));
-        triangles.push_back(static_cast<unsigned short>(loader.LoadedIndices[i+2]));
-        triangles.push_back(static_cast<unsigned short>(loader.LoadedIndices[i+1]));
+        triangles.push_back(loader.LoadedIndices[i]);
+        triangles.push_back(loader.LoadedIndices[i+2]);
+        triangles.push_back(loader.LoadedIndices[i+1]);
     }
-    /*for (auto& index : loader.LoadedIndices)
-    {
-        triangles.push_back(static_cast<unsigned short>(index));
-    }*/
     OnMeshUpdated(renderer);
 }
 
@@ -87,7 +83,7 @@ std::unique_ptr<Mesh> Mesh::CreatePrimitiveCube(Renderer& renderer, Vector3 size
         { 0.0F, 1.0F },
         { 1.0F, 1.0F }
     };
-    std::vector<unsigned short> t{
+    std::vector<unsigned int> t{
         0,2,1, 2,3,1,
         1,3,5, 3,7,5,
         2,6,3, 3,6,7,
@@ -98,10 +94,10 @@ std::unique_ptr<Mesh> Mesh::CreatePrimitiveCube(Renderer& renderer, Vector3 size
     return std::make_unique<Mesh>(renderer,v,t,u);
 }
 
-std::unique_ptr<Mesh> Mesh::CreatePrimitiveSphere(Renderer& renderer, float radius, unsigned short resolution)
+std::unique_ptr<Mesh> Mesh::CreatePrimitiveSphere(Renderer& renderer, float radius, unsigned int resolution)
 {
     std::vector<Vector3> v;
-    std::vector<unsigned short> t;
+    std::vector<unsigned int> t;
     std::vector<Vector2> u;
 
     v.push_back({ 0.0F, +radius, 0.0F });
@@ -110,10 +106,10 @@ std::unique_ptr<Mesh> Mesh::CreatePrimitiveSphere(Renderer& renderer, float radi
     float phiStep = DirectX::XM_PI / resolution;
     float thetaStep = phiStep * 2.0F;
 
-    for (unsigned short i = 1; i <= resolution - 1; i++)
+    for (unsigned int i = 1; i <= resolution - 1; i++)
     {
         float phi = i * phiStep;
-        for (unsigned short j = 0; j <= resolution; j++)
+        for (unsigned int j = 0; j <= resolution; j++)
         {
             float theta = j * thetaStep;
             Vector3 pos
@@ -143,11 +139,11 @@ std::unique_ptr<Mesh> Mesh::CreatePrimitiveSphere(Renderer& renderer, float radi
         t.push_back(i + 1);
     }
     //  Middle
-    unsigned short baseIndex = 1;
-    unsigned short ringVertexCount = resolution + 1;
-    for (unsigned short i = 0; i < resolution - 2; i++)
+    unsigned int baseIndex = 1;
+    unsigned int ringVertexCount = resolution + 1;
+    for (unsigned int i = 0; i < resolution - 2; i++)
     {
-        for (unsigned short j = 0; j < resolution; j++)
+        for (unsigned int j = 0; j < resolution; j++)
         {
             t.push_back(baseIndex + i * ringVertexCount + j);
             t.push_back(baseIndex + (i + 1) * ringVertexCount + j);
@@ -159,9 +155,9 @@ std::unique_ptr<Mesh> Mesh::CreatePrimitiveSphere(Renderer& renderer, float radi
         }
     }
     // Bottom
-    unsigned short southPoleIndex = static_cast<unsigned short>(v.size()) - 1;
+    unsigned int southPoleIndex = static_cast<unsigned int>(v.size()) - 1;
     baseIndex = southPoleIndex - ringVertexCount;
-    for (unsigned short i = 0; i < resolution; i++)
+    for (unsigned int i = 0; i < resolution; i++)
     {
         t.push_back(southPoleIndex);
         t.push_back(baseIndex + i + 1);

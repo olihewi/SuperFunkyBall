@@ -126,8 +126,8 @@
     <ClCompile Include="WICTextureLoader.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="GDIManager.cpp">
-      <Filter>Source Files\Engine</Filter>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -194,9 +194,6 @@
     <ClInclude Include="Vertex.h">
       <Filter>Header Files\Engine\Maths</Filter>
     </ClInclude>
-    <ClInclude Include="GDIManager.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="GameTime.h">
       <Filter>Header Files\Engine\Maths</Filter>
     </ClInclude>
@@ -211,6 +208,9 @@
     </ClInclude>
     <ClInclude Include="WICTextureLoader.h">
       <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

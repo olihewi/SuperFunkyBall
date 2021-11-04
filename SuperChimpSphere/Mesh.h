@@ -11,17 +11,17 @@
 class Mesh : public GameComponent
 {
 public:
-	Mesh(Renderer& renderer, std::vector<Vector3> _vertices, std::vector<unsigned short> _triangles, std::vector<Vector2> _uvs);
+	Mesh(Renderer& renderer, std::vector<Vector3> _vertices, std::vector<unsigned int> _triangles, std::vector<Vector2> _uvs);
 	Mesh(Renderer& renderer, std::string filePath);
 	void Render(Renderer& renderer);
 private:
 	void OnMeshUpdated(Renderer& renderer);
 public:
 	static std::unique_ptr<Mesh> CreatePrimitiveCube(Renderer& renderer, Vector3 size);
-	static std::unique_ptr<Mesh> CreatePrimitiveSphere(Renderer& renderer, float radius, unsigned short resolution);
+	static std::unique_ptr<Mesh> CreatePrimitiveSphere(Renderer& renderer, float radius, unsigned int resolution);
 private:
 	std::vector<Vector3> vertices;
-	std::vector<unsigned short> triangles;
+	std::vector<unsigned int> triangles;
 	std::vector<Vector2> uvs;
 
 	std::vector<std::shared_ptr<GraphicsComponent>> components;
