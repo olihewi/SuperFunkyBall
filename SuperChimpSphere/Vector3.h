@@ -31,6 +31,7 @@ struct Vector3
 	float Magnitude();
 	Vector3 Normalized();
 	float DotProduct(const Vector3& v);
+	Vector3 CrossProduct(const Vector3& v);
 
 	float x, y, z;
 };

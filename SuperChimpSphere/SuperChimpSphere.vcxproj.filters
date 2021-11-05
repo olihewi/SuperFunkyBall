@@ -156,6 +156,18 @@
     <ClCompile Include="Transform.cpp">
       <Filter>Source Files\Engine\Maths</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>Source Files\Engine\GameComponents\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Source Files\Engine\GameComponents\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsTestSphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshCollider.cpp">
+      <Filter>Source Files\Engine\GameComponents\Colliders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Keyboard.h">
@@ -260,8 +272,20 @@
     <ClInclude Include="SphereCollider.h">
       <Filter>Header Files\Engine\GameComponents\Colliders</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>Header Files\Engine\GameComponents\Colliders</Filter>
+    </ClInclude>
     <ClInclude Include="Input.h">
+      <Filter>Header Files\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsTestSphere.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshCollider.h">
+      <Filter>Header Files\Engine\GameComponents\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Header Files\Engine\GameComponents\Colliders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

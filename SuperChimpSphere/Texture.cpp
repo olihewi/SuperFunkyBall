@@ -66,8 +66,8 @@ void Texture::Load(Renderer& renderer)
 	);
 }
 
-std::shared_ptr<Texture> Texture::GetOrCreate(Renderer& renderer, const std::wstring& path)
+std::shared_ptr<Texture> Texture::GetOrCreate(Renderer& renderer, const std::wstring& path, unsigned int _slot)
 {
-	cache.try_emplace(path, std::make_shared<Texture>(renderer, path, cache.size()));
+	cache.try_emplace(path, std::make_shared<Texture>(renderer, path, _slot));
 	return cache[path];
 }

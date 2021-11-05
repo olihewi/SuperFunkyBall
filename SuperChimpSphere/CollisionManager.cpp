@@ -1,14 +1,61 @@
-#include "SphereCollider.h"
+#include "CollisionManager.h"
 
-SphereCollider::SphereCollider(Transform& _transform, float _radius, Physics* _physics) : Collider(ColliderType::SPHERE, _transform, _physics), radius(_radius)
+std::map<unsigned int, Collider*> CollisionManager::colliders;
+unsigned int CollisionManager::index = 0;
+
+void CollisionManager::DetectCollisions()
 {
+	unsigned int x = 0;
+	unsigned int y = 0;
+	for (auto& i : colliders)
+	{
+		for (auto& j : colliders)
+		{
+			if (x > y)
+			{
+				DetectCollision(i.second, j.second);
+			}
+			x++;
+		}
+		y++;
+	}
 }
 
-bool SphereCollider::SphereVsSphere(SphereCollider* a, SphereCollider* b)
+void CollisionManager::DetectCollision(Collider* a, Collider* b)
 {
-	return (a->transform.position - b->transform.position).Magnitude() <= a->radius + b->radius;
+	switch (a->colliderType)
+	{
+	case Collider::ColliderType::SPHERE:
+		switch (b->colliderType)
+		{
+		case Collider::ColliderType::SPHERE:
+			SphereVsSphere(dynamic_cast<SphereCollider*>(a), dynamic_cast<SphereCollider*>(b));
+			break;
+		case Collider::ColliderType::MESH:
+			SphereVsMesh(dynamic_cast<SphereCollider*>(a), dynamic_cast<MeshCollider*>(b));
+			break;
+		}
+		break;
+	case Collider::ColliderType::MESH:
+		switch (b->colliderType)
+		{
+		case Collider::ColliderType::SPHERE:
+			SphereVsMesh(dynamic_cast<SphereCollider*>(b), dynamic_cast<MeshCollider*>(a));
+			break;
+		}
+		break;
+	}
 }
-bool SphereCollider::SphereVsMesh(SphereCollider* sphere, MeshCollider* mesh)
+
+void CollisionManager::SphereVsSphere(SphereCollider* a, SphereCollider* b)
+{
+	Vector3 difference = a->transform.position - b->transform.position;
+	bool hit = difference.SqrMagnitude() <= a->radius * a->radius + b->radius * b->radius;
+	Vector3 normal = difference.Normalized();
+	a->OnCollision(Collision( hit, normal ));
+	b->OnCollision(Collision( hit, -normal ));
+}
+void CollisionManager::SphereVsMesh(SphereCollider* sphere, MeshCollider* mesh)
 {
 	Vector3 relativePos = mesh->transform.position - sphere->transform.position;
 	for (unsigned int i = 0; i < mesh->mesh->triangles.size(); i += 3)
@@ -17,8 +64,8 @@ bool SphereCollider::SphereVsMesh(SphereCollider* sphere, MeshCollider* mesh)
 
 		// Points of the triangle
 		Vector3 A = mesh->mesh->vertices[mesh->mesh->triangles[i]] + relativePos;
-		Vector3 B = mesh->mesh->vertices[mesh->mesh->triangles[i + 1]] + relativePos;
-		Vector3 C = mesh->mesh->vertices[mesh->mesh->triangles[i + 2]] + relativePos;
+		Vector3 B = mesh->mesh->vertices[mesh->mesh->triangles[i + 2]] + relativePos;
+		Vector3 C = mesh->mesh->vertices[mesh->mesh->triangles[i + 1]] + relativePos;
 		// Radius^2 is used to avoid the complexity of square root
 		float r2 = sphere->radius * sphere->radius;
 		// The normal of the triangle is the cross product of A->B and A->C
@@ -61,10 +108,9 @@ bool SphereCollider::SphereVsMesh(SphereCollider* sphere, MeshCollider* mesh)
 					(Q2.DotProduct(Q2) <= r2 * e2 * e2 && Q2.DotProduct(QA) <= 0) ||
 					(Q3.DotProduct(Q3) <= r2 * e3 * e3 && Q3.DotProduct(QB) <= 0))
 				{
-					return true;
+					sphere->OnCollision(Collision(true, normal.Normalized()));
 				}
 			}
 		}
 	}
-	return false;
 }

@@ -7,12 +7,12 @@ void Controllers::Tick()
 	{
 		XINPUT_STATE state;
 		ZeroMemory(&state, sizeof(XINPUT_STATE));
-		if (XInputGetState(i, &state) == 0x00000000)
+		if (XInputGetState(i, &state) == 0)
 		{
 			auto& gamepad = state.Gamepad;
 			auto& controller = controllers[i];
 			controller.connected = true;
-			controller.buttons = controller.buttons;
+			controller.buttons = gamepad.wButtons;
 			controller.axis[0] = static_cast<float>(gamepad.sThumbLX) / 32767.0F;
 			controller.axis[1] = static_cast<float>(gamepad.sThumbLY) / 32767.0F;
 			controller.axis[2] = static_cast<float>(gamepad.sThumbRX) / 32767.0F;

@@ -15,6 +15,7 @@ Input::Input(Window& window)
 
 void Input::Tick()
 {
+	keyboard.Tick();
 	controllers.Tick();
 }
 
@@ -60,7 +61,22 @@ Vector2 Input::GetStick(unsigned int _index, unsigned int _stick)
 
 Vector2 Input::GetMovement()
 {
-	return controllers.IsConnected(0U) ? GetStick(0U,Controller::Sticks::Left) : 
+	Vector2 movement = GetStick(0U, Controller::Sticks::Left) +
 		Vector2(static_cast<float>(GetKey('D')) - static_cast<float>(GetKey('A')),
-		static_cast<float>(GetKey('W')) - static_cast<float>(GetKey('S')));
+			static_cast<float>(GetKey('W')) - static_cast<float>(GetKey('S')));
+	if (movement.Magnitude() > 1.0F)
+	{
+		movement = movement.Normalized();
+	}
+	return movement;
+}
+
+bool Input::GetPrimaryButton()
+{
+	return controllers.GetButton(0U,Controller::Buttons::A) || keyboard.GetKey(Keys::Space);
+}
+
+bool Input::GetPrimaryButtonDown()
+{
+	return controllers.GetButtonDown(0U, Controller::Buttons::A) || keyboard.GetKeyDown(Keys::Space);
 }

@@ -86,7 +86,7 @@ Renderer::Renderer(HWND hWnd)
 	viewport.TopLeftY = 0;
 	context->RSSetViewports(1U, &viewport);
 
-	SetProjectionMatrix(DirectX::XMMatrixPerspectiveRH(1.0F, viewport.Height / viewport.Width, 0.5F, 10.0F));
+	SetProjectionMatrix(DirectX::XMMatrixPerspectiveRH(1.0F, viewport.Height / viewport.Width, 0.5F, 100.0F));
 }
 
 void Renderer::EndFrame()

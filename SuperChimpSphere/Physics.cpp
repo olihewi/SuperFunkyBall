@@ -11,8 +11,14 @@ void Physics::Update(GameTime& time)
 	velocity = velocity / (1 + drag * delta);
 	Vector3 v = velocity * delta;
 	transform.position += v;
-	if (transform.position.y < -1.0F)
+	if (transform.position.y <= 0.0F && velocity.y < 0.0F)
 	{
-		velocity.y = 5.0F;
+		transform.position.y = 0.0F;
+		velocity.y = 0.0F;
 	}
+}
+
+void Physics::ResolveCollision(Collision& collision)
+{
+	velocity = collision.normal;
 }

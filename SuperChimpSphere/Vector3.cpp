@@ -159,6 +159,15 @@ float Vector3::DotProduct(const Vector3& v)
 	return x * v.x + y * v.y + z * v.z;
 }
 
+Vector3 Vector3::CrossProduct(const Vector3& v)
+{
+	return Vector3(
+		(y * v.z) - (z * v.y),
+		(z * v.x) - (x * v.z),
+		(x * v.y) - (y * v.x)
+	);
+}
+
 Vector2::Vector2() : x(0.0F), y(0.0F)
 {
 }

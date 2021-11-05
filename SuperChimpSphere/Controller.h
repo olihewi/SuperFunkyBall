@@ -57,4 +57,3 @@ private:
 	std::array<Controller, XUSER_MAX_COUNT> controllers{};
 	std::array<Controller, XUSER_MAX_COUNT> lastControllers{};
 };
-

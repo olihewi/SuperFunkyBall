@@ -19,11 +19,12 @@ private:
 public:
 	static std::unique_ptr<Mesh> CreatePrimitiveCube(Renderer& renderer, Vector3 size);
 	static std::unique_ptr<Mesh> CreatePrimitiveSphere(Renderer& renderer, float radius, unsigned int resolution);
-protected:
+	// should be protected but hey ho
 	std::vector<Vector3> vertices;
 	std::vector<unsigned int> triangles;
 	std::vector<Vector2> uvs;
 
+protected:
 	std::vector<std::shared_ptr<GraphicsComponent>> components;
 
 	std::wstring texturePath = L"";

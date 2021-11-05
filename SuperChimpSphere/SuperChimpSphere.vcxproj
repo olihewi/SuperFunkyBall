@@ -152,6 +152,8 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Colour.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="Controller.cpp" />
@@ -162,9 +164,11 @@
     <ClCompile Include="InputLayout.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MeshCollider.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="PhysicsTestSphere.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Renderer.cpp" />
@@ -185,6 +189,8 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="CollisionManager.h" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="Colour.h" />
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="Controller.h" />
@@ -198,10 +204,12 @@
     <ClInclude Include="InputLayout.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="MeshCollider.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="OBJ_Loader.h" />
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="PhysicsTestSphere.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Renderer.h" />

@@ -21,6 +21,8 @@ public:
 	Vector2 GetStick(unsigned int _index, unsigned int _stick);
 	// Mappings
 	Vector2 GetMovement();
+	bool GetPrimaryButton();
+	bool GetPrimaryButtonDown();
 
 	Keyboard keyboard{};
 	Mouse mouse{};

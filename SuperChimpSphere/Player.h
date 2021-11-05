@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-#include "Physics.h"
+#include "SphereCollider.h"
 class Player : public GameObject
 {
 public:
@@ -8,5 +8,6 @@ public:
 	void Update(Input& input, GameTime& time) override;
 private:
 	Physics* physics;
+	SphereCollider* collider;
 };
 

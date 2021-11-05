@@ -2,7 +2,6 @@
 #include <vector>
 #include <memory>
 #include "GameComponent.h"
-#include <DirectXMath.h>
 #include "Input.h"
 #include "Transform.h"
 class GameObject
@@ -10,11 +9,11 @@ class GameObject
 public:
 	GameObject() = default;
 
-	void AddComponent(std::unique_ptr<GameComponent> _component);
+	GameComponent* AddComponent(std::unique_ptr<GameComponent> _component);
 
 	virtual void Update(Input& input, GameTime& time);
 	virtual void Render(Renderer& renderer);
-protected:
 	Transform transform;
+protected:
 	std::vector<std::unique_ptr<GameComponent>> components;
 };

@@ -1,9 +1,10 @@
 #include "GameObject.h"
 #include "Mesh.h"
 
-void GameObject::AddComponent(std::unique_ptr<GameComponent> _component)
+GameComponent* GameObject::AddComponent(std::unique_ptr<GameComponent> _component)
 {
 	components.push_back(std::move(_component));
+	return components.back().get();
 }
 
 void GameObject::Update(Input& input, GameTime& time)
