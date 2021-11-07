@@ -57,10 +57,10 @@ namespace Keys
 	constexpr int Tab           = 258;
 	constexpr int Backspace     = 259;
 	constexpr int Delete        = 261;
-	constexpr int RightArrow    = 262;
-	constexpr int LeftArrow     = 263;
-	constexpr int DownArrow     = 264;
-	constexpr int UpArrow       = 265;
+	constexpr int RightArrow    = 0x27;
+	constexpr int LeftArrow     = 0x25;
+	constexpr int DownArrow     = 0x28;
+	constexpr int UpArrow       = 0x26;
 }
 class Keyboard
 {

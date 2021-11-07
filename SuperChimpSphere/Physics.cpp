@@ -20,5 +20,6 @@ void Physics::Update(GameTime& time)
 
 void Physics::ResolveCollision(Collision& collision)
 {
-	velocity = collision.normal;
+	transform.position += collision.normal * collision.penetration;
+	velocity += collision.normal * collision.penetration;
 }

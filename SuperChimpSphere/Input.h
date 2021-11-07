@@ -21,6 +21,7 @@ public:
 	Vector2 GetStick(unsigned int _index, unsigned int _stick);
 	// Mappings
 	Vector2 GetMovement();
+	Vector2 GetCamera();
 	bool GetPrimaryButton();
 	bool GetPrimaryButtonDown();
 

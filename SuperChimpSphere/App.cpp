@@ -18,7 +18,7 @@ App::App(const GameSettings& _settings) : settings(_settings), window(static_cas
 	//mesh = std::make_unique<Mesh>(Mesh::CreatePrimitiveSphere(window.GetRenderer(), 1.0F, 20U));
 	gameObjects.push_back(std::make_unique<Player>(window.GetRenderer()));
 	gameObjects.push_back(std::make_unique<Camera>(window.GetRenderer(), dynamic_cast<Player*>(gameObjects.back().get())));
-	int numberOfDogs = 2000;
+	int numberOfDogs = 1;
 	int w = std::sqrt(numberOfDogs);
 	for (int i = 0; i < numberOfDogs; i++)
 	{
@@ -51,11 +51,11 @@ void App::Update()
 {
 	time.Tick();
 	input.Tick();
-	CollisionManager::DetectCollisions();
 	for (auto& gameObject : gameObjects)
 	{
 		gameObject->Update(input, time);
 	}
+	CollisionManager::DetectCollisions();
 }
 
 void App::Render()

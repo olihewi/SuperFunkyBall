@@ -9,14 +9,13 @@ Camera::Camera(Renderer& renderer, Player* _player) : player(_player)
 
 void Camera::Update(Input& input, GameTime& time)
 {
+	cameraOffset += input.GetAxis(0U,Controller::Axes::LeftTrigger) - input.GetAxis(0U,Controller::Axes::RightTrigger);
 	transform.position.x = player->transform.position.x;
 	transform.position.y = player->transform.position.y;
-	transform.position.z = player->transform.position.z + 5.0F;
+	transform.position.z = player->transform.position.z + cameraOffset;
 
-	if (input.GetKey(Keys::R))
-	{
-		transform.rotation.y += 0.1F * time.Delta();
-	}
+	Vector2 camera = input.GetCamera() * 0.5F * time.Delta();
+	rotation += camera;
 	/*auto input = keyboard.GetIJKL() * (keyboard.GetKey(16) ? 2.0F : 1.0F);
 	auto input2 = keyboard.GetArrowKeys() * time.Delta();
 
@@ -30,7 +29,8 @@ void Camera::Render(Renderer& renderer)
 {
 	DirectX::XMMATRIX matrix = DirectX::XMMatrixIdentity();
 	matrix *= DirectX::XMMatrixTranslation(-transform.position.x, -transform.position.y, -transform.position.z);
-	matrix *= DirectX::XMMatrixRotationRollPitchYaw(transform.rotation.x, transform.rotation.y, transform.rotation.z);// * matrix;
+	matrix *= DirectX::XMMatrixRotationY(rotation.x) * DirectX::XMMatrixRotationX(-rotation.y);// *matrix;
+	//matrix *= DirectX::XMMatrixRotationRollPitchYaw(transform.rotation.x, transform.rotation.y, transform.rotation.z);// * matrix;
 	matrix *= DirectX::XMMatrixScaling(transform.scale.x, transform.scale.y, transform.scale.z);
 	renderer.SetViewMatrix(matrix);
 }

@@ -151,7 +151,7 @@ Vector3 Vector3::Normalized()
 	{
 		return Vector3s::zero;
 	}
-	return *this * std::sqrtf(mag2);
+	return *this / std::sqrtf(mag2);
 }
 
 float Vector3::DotProduct(const Vector3& v)
@@ -166,6 +166,20 @@ Vector3 Vector3::CrossProduct(const Vector3& v)
 		(z * v.x) - (x * v.z),
 		(x * v.y) - (y * v.x)
 	);
+}
+
+Vector3 Vector3::Absolute()
+{
+	return Vector3(
+		std::fabsf(x),
+		std::fabsf(y),
+		std::fabsf(z)
+	);
+}
+
+Vector3 Vector3::Sqrt()
+{
+	return Vector3(std::sqrtf(x),std::sqrtf(y),std::sqrtf(z));
 }
 
 Vector2::Vector2() : x(0.0F), y(0.0F)

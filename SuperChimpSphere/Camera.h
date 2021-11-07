@@ -9,5 +9,7 @@ public:
 	void Render(Renderer& renderer) override;
 private:
 	Player* player;
+	float cameraOffset = 5.0F;
+	Vector2 rotation;
 };
 

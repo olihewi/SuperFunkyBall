@@ -68,7 +68,27 @@ Vector2 Input::GetMovement()
 	{
 		movement = movement.Normalized();
 	}
+	else if (movement.Magnitude() < 0.25F)
+	{
+		return Vector2s::zero;
+	}
 	return movement;
+}
+
+Vector2 Input::GetCamera()
+{
+	Vector2 camera = GetStick(0U, Controller::Sticks::Right) +
+		Vector2(static_cast<float>(GetKey(Keys::RightArrow)) - static_cast<float>(GetKey(Keys::LeftArrow)),
+			static_cast<float>(GetKey(Keys::UpArrow)) - static_cast<float>(GetKey(Keys::DownArrow)));
+	if (camera.Magnitude() > 1.0F)
+	{
+		camera = camera.Normalized();
+	}
+	else if (camera.Magnitude() < 0.25F)
+	{
+		return Vector2s::zero;
+	}
+	return camera;
 }
 
 bool Input::GetPrimaryButton()
