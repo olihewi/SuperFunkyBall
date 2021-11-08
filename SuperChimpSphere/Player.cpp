@@ -25,10 +25,18 @@ void Player::Update(Input& input, GameTime& time)
 	{
 		transform.position = Vector3s::up;
 	}
+	Vector2 vel2D{ physics->velocity.x,physics->velocity.z };
+	if (vel2D.Magnitude() > 0.1F)
+	{
+		float rotationAngle = std::atan2f(vel2D.y, vel2D.x) - std::atan2f(cameraDir.y, cameraDir.x);
+		float speedFactor = cameraDir.DotProduct(vel2D) > 0.0F ? vel2D.Magnitude() : 1.0F;
+		cameraDir = cameraDir.Rotate(rotationAngle * std::fminf(std::fmaxf(speedFactor,1.0F),2.0F) * time.Delta());
+	}
 	cameraDir = cameraDir.Rotate((static_cast<float>(input.GetKey('E')) - static_cast<float>(input.GetKey('Q'))) * time.Delta());
 	/*if (physics->velocity.Magnitude() > 0.1F)
 	{
-		cameraDir = cameraDir.Lerp(Vector2(physics->velocity.x, physics->velocity.z).Normalized(), 0.1F);
+		cameraDir = Vector2(physics->velocity.x, physics->velocity.z).Normalized();
+		//cameraDir = cameraDir.Lerp(Vector2(physics->velocity.x, physics->velocity.z).Normalized(), 0.1F);
 	}*/
 	GameObject::Update(input, time);
 	//transform.rotation = DirectX::XMQuaternionRotationAxis({ physics->velocity.Normalized().x,physics->velocity.Normalized().y, physics->velocity.Normalized().z }, 1.0F);
