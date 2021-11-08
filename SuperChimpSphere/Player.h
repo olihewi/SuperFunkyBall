@@ -13,5 +13,7 @@ private:
 	SphereCollider* collider;
 	
 	Vector2 acceleration;
+	Vector2 cameraDir = Vector2s::up;
+	Vector2 cameraTilt;
 };
 

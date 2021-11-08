@@ -11,8 +11,12 @@ Player::Player(Renderer& renderer)
 
 void Player::Update(Input& input, GameTime& time)
 {
-	acceleration = acceleration.Lerp(input.GetMovement() * time.Delta() * 4.0F,0.25F);
-	physics->velocity += Vector3(acceleration.x, 0.0F, -acceleration.y);
+	Vector2 relativeMovement = input.GetMovement();
+	//relativeMovement = cameraDir * relativeMovement.y;
+	cameraTilt = cameraTilt.Lerp(relativeMovement * time.Delta() * 4.0F, 0.25F);
+	relativeMovement = cameraDir * relativeMovement.y + cameraDir.RotatedClockwise() * -relativeMovement.x;
+	acceleration = acceleration.Lerp(relativeMovement * time.Delta() * 4.0F,0.25F);
+	physics->velocity += Vector3(acceleration.x, 0.0F, acceleration.y);
 	if (input.GetPrimaryButtonDown() && physics->touchingSurface)
 	{
 		physics->velocity += (Vector3s::up + physics->surfaceNormal) * 2.5F;
@@ -21,6 +25,11 @@ void Player::Update(Input& input, GameTime& time)
 	{
 		transform.position = Vector3s::up;
 	}
+	cameraDir = cameraDir.Rotate((static_cast<float>(input.GetKey('E')) - static_cast<float>(input.GetKey('Q'))) * time.Delta());
+	/*if (physics->velocity.Magnitude() > 0.1F)
+	{
+		cameraDir = cameraDir.Lerp(Vector2(physics->velocity.x, physics->velocity.z).Normalized(), 0.1F);
+	}*/
 	GameObject::Update(input, time);
 	//transform.rotation = DirectX::XMQuaternionRotationAxis({ physics->velocity.Normalized().x,physics->velocity.Normalized().y, physics->velocity.Normalized().z }, 1.0F);
 

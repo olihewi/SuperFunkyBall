@@ -330,3 +330,14 @@ Vector2 Vector2::Lerp(Vector2 end, float t)
 {
 	return *this * (1-t) + end * t;
 }
+
+Vector2 Vector2::Rotate(float angle)
+{
+	return Vector2(this->x * std::cosf(angle) - this->y * std::sinf(angle),
+		this->x * std::sinf(angle) + this->y * std::cosf(angle));
+}
+
+Vector2 Vector2::RotatedClockwise()
+{
+	return Vector2(this->y,-this->x);
+}

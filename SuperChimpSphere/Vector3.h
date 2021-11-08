@@ -84,6 +84,8 @@ struct Vector2
 	Vector2 Normalized();
 	float DotProduct(const Vector2& v);
 	Vector2 Lerp(Vector2 end, float t);
+	Vector2 Rotate(float angle);
+	Vector2 RotatedClockwise();
 
 	float x, y;
 };

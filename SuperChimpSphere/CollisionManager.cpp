@@ -13,11 +13,10 @@ void CollisionManager::DetectCollisions()
 	{
 		for (auto& j : colliders)
 		{
-			if (x > y)
+			if (x++ > y)
 			{
 				DetectCollision(i.second, j.second);
 			}
-			x++;
 		}
 		y++;
 	}
@@ -39,7 +38,7 @@ void CollisionManager::DetectCollision(Collider* a, Collider* b)
 			break;
 		case Collider::ColliderType::MESH:
 			int numIterations = 0;
-			while (SphereVsMesh(dynamic_cast<SphereCollider*>(a), dynamic_cast<MeshCollider*>(b)) && numIterations++ <= 14)
+			while (SphereVsMesh(dynamic_cast<SphereCollider*>(a), dynamic_cast<MeshCollider*>(b)) && numIterations++ <= 16)
 			{
 			}
 			break;
@@ -115,7 +114,7 @@ Collision CollisionManager::SphereVsTriangle(float radius, Vector3& A, Vector3& 
 		float bb = B.DotProduct(B);
 		float bc = B.DotProduct(C);
 		float cc = C.DotProduct(C);
-		// If the sphere lies inside of any triangle vertex
+		// If the sphere lies inside of each triangle vertex
 		if (((aa < r2) || (ab < aa) || (ac < aa)) &&
 			((bb < r2) || (ab < bb) || (bc < bb)) &&
 			((cc < r2) || (ac < cc) || (bc < cc)))
