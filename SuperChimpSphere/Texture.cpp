@@ -6,7 +6,7 @@ std::unordered_map<std::wstring, std::shared_ptr<Texture>> Texture::cache;
 Texture::Texture(Renderer& renderer, const std::wstring& path, unsigned int _slot) : slot(_slot)
 {
 	//Gdiplus::Bitmap bmp(path.c_str());
-	HRESULT result = DirectX::CreateWICTextureFromFile(renderer.GetDevice(), path.c_str(), NULL, &shaderResourceView);
+	DirectX::CreateWICTextureFromFile(renderer.GetDevice(), path.c_str(), NULL, &shaderResourceView);
 	/*auto width = 256U; //bmp.GetWidth();
 	auto height = 256U; //bmp.GetHeight();
 	pixels = std::make_unique<Colour[]>(width * height);

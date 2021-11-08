@@ -3,7 +3,7 @@
 
 Player::Player(Renderer& renderer)
 {
-	transform.position.y = 1.0F;
+	transform.position.y = 2.0F;
 	physics = dynamic_cast<Physics*>(AddComponent(std::make_unique<Physics>(transform)));
 	collider = dynamic_cast<SphereCollider*>(AddComponent(std::make_unique<SphereCollider>(transform, 0.5F, physics)));
 	AddComponent(Mesh::CreatePrimitiveSphere(renderer, 0.5F, 16U));
@@ -26,13 +26,15 @@ void Player::Update(Input& input, GameTime& time)
 		transform.position = Vector3s::up;
 	}
 	Vector2 vel2D{ physics->velocity.x,physics->velocity.z };
-	if (vel2D.Magnitude() > 0.1F)
+	/*if (vel2D.Magnitude() > 0.1F)
 	{
+		//float rotationAngle = std::atan2f(vel2D.x*cameraDir.y - vel2D.y*cameraDir.x,vel2D.x * cameraDir.x + vel2D.y * cameraDir.y);
 		float rotationAngle = std::atan2f(vel2D.y, vel2D.x) - std::atan2f(cameraDir.y, cameraDir.x);
 		float speedFactor = cameraDir.DotProduct(vel2D) > 0.0F ? vel2D.Magnitude() : 1.0F;
 		cameraDir = cameraDir.Rotate(rotationAngle * std::fminf(std::fmaxf(speedFactor,1.0F),2.0F) * time.Delta());
-	}
-	cameraDir = cameraDir.Rotate((static_cast<float>(input.GetKey('E')) - static_cast<float>(input.GetKey('Q'))) * time.Delta());
+		//cameraDir = cameraDir.Rotate(rotationAngle * time.Delta());
+	}*/
+	cameraDir = cameraDir.Rotate(input.GetCamera().x * time.Delta() * 1.0F / (1.0F+vel2D.Magnitude()*0.1F) * 2.0F);
 	/*if (physics->velocity.Magnitude() > 0.1F)
 	{
 		cameraDir = Vector2(physics->velocity.x, physics->velocity.z).Normalized();

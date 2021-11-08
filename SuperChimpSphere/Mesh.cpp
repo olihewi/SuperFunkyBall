@@ -94,12 +94,12 @@ std::unique_ptr<Mesh> Mesh::CreatePrimitiveCube(Renderer& renderer, Vector3 size
         { +size.x, +size.y, -size.z },
     };
     std::vector<Vector2> u{
-        // Top
+        // Bottom
         { 0.0F, 0.0F },
         { 1.0F, 0.0F },
         { 0.0F, 1.0F },
         { 1.0F, 1.0F },
-        // Bottom
+        // Top
         { 0.0F, 0.0F },
         { 1.0F, 0.0F },
         { 0.0F, 1.0F },

@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Player.h"
+#include "Skybox.h"
 class Camera : public GameObject
 {
 public:
@@ -11,5 +12,6 @@ private:
 	Player* player;
 	float cameraOffset = 5.0F;
 	Vector2 rotation;
+	Skybox skybox;
 };
 
