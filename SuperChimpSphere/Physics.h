@@ -13,7 +13,9 @@ private:
 	Transform& transform;
 public:
 	Vector3 velocity = Vector3s::zero;
-	float drag = 2.0F;
+	Vector3 surfaceNormal = Vector3s::up;
+	bool touchingSurface = false;
+	float drag = 0.5F;
 	float mass = 1.0F;
 	const float gravityMultiplier = 9.81F;
 };

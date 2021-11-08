@@ -182,6 +182,11 @@ Vector3 Vector3::Sqrt()
 	return Vector3(std::sqrtf(x),std::sqrtf(y),std::sqrtf(z));
 }
 
+Vector3 Vector3::Lerp(Vector3 end, float t)
+{
+	return *this * (1 - t) + end * t;
+}
+
 Vector2::Vector2() : x(0.0F), y(0.0F)
 {
 }
@@ -319,4 +324,9 @@ Vector2 Vector2::Normalized()
 float Vector2::DotProduct(const Vector2& v)
 {
 	return x * v.x + y * v.y;
+}
+
+Vector2 Vector2::Lerp(Vector2 end, float t)
+{
+	return *this * (1-t) + end * t;
 }

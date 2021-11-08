@@ -3,6 +3,7 @@
 #include "SphereCollider.h"
 class Player : public GameObject
 {
+	friend class Camera;
 public:
 	Player(Renderer& renderer);
 	void Update(Input& input, GameTime& time) override;
@@ -10,5 +11,7 @@ public:
 private:
 	Physics* physics;
 	SphereCollider* collider;
+	
+	Vector2 acceleration;
 };
 

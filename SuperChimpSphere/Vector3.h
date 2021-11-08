@@ -34,6 +34,7 @@ struct Vector3
 	Vector3 CrossProduct(const Vector3& v);
 	Vector3 Absolute();
 	Vector3 Sqrt();
+	Vector3 Lerp(Vector3 end, float t);
 
 	float x, y, z;
 };
@@ -82,6 +83,7 @@ struct Vector2
 	float Magnitude();
 	Vector2 Normalized();
 	float DotProduct(const Vector2& v);
+	Vector2 Lerp(Vector2 end, float t);
 
 	float x, y;
 };

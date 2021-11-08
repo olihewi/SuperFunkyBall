@@ -5,7 +5,7 @@
 
 PhysicsTestSphere::PhysicsTestSphere(Renderer& renderer, Vector3 position)
 {
-	transform.position = Vector3(2.0F,0.0F,0.0F);// = position;// +Vector3(0.0F, 2.0F, 0.0F);
+	transform.position = Vector3(0.0F,0.0F,0.0F);// = position;// +Vector3(0.0F, 2.0F, 0.0F);
 	//Mesh* mesh = dynamic_cast<Mesh*>(AddComponent(Mesh::CreatePrimitiveSphere(renderer, 1.5F, 16U)));
 	//AddComponent(std::make_unique<SphereCollider>(transform, 1.5F));
 	//Mesh* mesh = dynamic_cast<Mesh*>(AddComponent(std::make_unique<Mesh>(renderer,"Models/dog.obj",L"Models/dog.png")));
