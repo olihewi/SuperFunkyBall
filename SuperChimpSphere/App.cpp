@@ -2,7 +2,7 @@
 #include "Model.h"
 #include "Camera.h"
 #include "Player.h"
-#include "PhysicsTestSphere.h"
+#include "Level.h"
 #include "CollisionManager.h"
 
 App::App(const GameSettings& _settings) : settings(_settings), window(static_cast<int>(settings.video.resolution.x),static_cast<int>(settings.video.resolution.y),"ASGE"), input(window)
@@ -16,14 +16,7 @@ App::App(const GameSettings& _settings) : settings(_settings), window(static_cas
 		},
 		DirectX::XMMatrixIdentity));*/
 	//mesh = std::make_unique<Mesh>(Mesh::CreatePrimitiveSphere(window.GetRenderer(), 1.0F, 20U));
-	gameObjects.push_back(std::make_unique<Player>(window.GetRenderer()));
-	gameObjects.push_back(std::make_unique<Camera>(window.GetRenderer(), dynamic_cast<Player*>(gameObjects.back().get())));
-	int numberOfDogs = 1;
-	int w = std::sqrt(numberOfDogs);
-	for (int i = 0; i < numberOfDogs; i++)
-	{
-		gameObjects.push_back(std::make_unique<PhysicsTestSphere>(window.GetRenderer(),Vector3(2.0F + (i%w)*2.0F,-2.0F,-(i/w)*2.0F)));
-	}
+	gameObjects.push_back(std::make_unique<Level>(window.GetRenderer(),"Levels/stage2.json"));
 	//gameObjects.push_back(std::make_unique<Model>(window.GetRenderer(), "Models/dog.obj", L"Models/dog.png"));
 }
 

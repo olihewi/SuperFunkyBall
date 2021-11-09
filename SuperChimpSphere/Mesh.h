@@ -23,6 +23,7 @@ public:
 	std::vector<Vector3> vertices;
 	std::vector<unsigned int> triangles;
 	std::vector<Vector2> uvs;
+	std::vector<Vector3> normals;
 
 protected:
 	std::vector<std::shared_ptr<GraphicsComponent>> components;
@@ -32,7 +33,8 @@ protected:
 	const std::vector<D3D11_INPUT_ELEMENT_DESC> elementDesc
 	{
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 20, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 	};
 };
 

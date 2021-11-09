@@ -11,7 +11,7 @@ DirectX::XMMATRIX Transform::GetMatrix()
 	matrix = rotation * matrix;
 	//matrix = DirectX::XMMatrixRotationQuaternion(rotation);
 	//matrix = DirectX::XMMatrixRotationRollPitchYaw(rotation.x, rotation.y, rotation.z) * matrix;
-	matrix *= DirectX::XMMatrixScaling(scale.x, scale.y, scale.z);
+	matrix = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z) * matrix;
 	return matrix;
 }
 

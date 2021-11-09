@@ -1,6 +1,6 @@
 #include "ConstantBuffer.h"
 
-ConstantBuffer::ConstantBuffer(ID3D11Device* device, const ConstantBufferData& bufferData)
+ConstantBuffer::ConstantBuffer(ID3D11Device* device, const ConstantBufferData& bufferData, unsigned int _slot) : slot(_slot)
 {
 	D3D11_BUFFER_DESC bufferDesc;
 	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER; // The type of buffer we want
@@ -29,7 +29,7 @@ void ConstantBuffer::Load(ID3D11DeviceContext* context, const ConstantBufferData
 	context->Unmap(constantBuffer.Get(), 0U);
 
 	context->VSSetConstantBuffers(
-		0U, // Start Slot
+		slot, // Start Slot
 		1U, // Number of buffers
 		constantBuffer.GetAddressOf() // Constant Buffer
 	);

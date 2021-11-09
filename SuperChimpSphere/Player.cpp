@@ -14,7 +14,9 @@ void Player::Update(Input& input, GameTime& time)
 	Vector2 relativeMovement = input.GetMovement();
 	//relativeMovement = cameraDir * relativeMovement.y;
 	cameraTilt = cameraTilt.Lerp(relativeMovement * time.Delta() * 4.0F, 0.25F);
-	relativeMovement = cameraDir * relativeMovement.y + cameraDir.RotatedClockwise() * -relativeMovement.x;
+	relativeMovement.y = -relativeMovement.y;
+	relativeMovement = relativeMovement.Rotate(cameraDir.x);
+	//relativeMovement = cameraDir * relativeMovement.y + cameraDir.RotatedClockwise() * -relativeMovement.x;
 	acceleration = acceleration.Lerp(relativeMovement * time.Delta() * 4.0F,0.25F);
 	physics->velocity += Vector3(acceleration.x, 0.0F, acceleration.y);
 	if (input.GetPrimaryButtonDown() && physics->touchingSurface)
@@ -34,7 +36,9 @@ void Player::Update(Input& input, GameTime& time)
 		cameraDir = cameraDir.Rotate(rotationAngle * std::fminf(std::fmaxf(speedFactor,1.0F),2.0F) * time.Delta());
 		//cameraDir = cameraDir.Rotate(rotationAngle * time.Delta());
 	}*/
-	cameraDir = cameraDir.Rotate(input.GetCamera().x * time.Delta() * 1.0F / (1.0F+vel2D.Magnitude()*0.1F) * 2.0F);
+	cameraDir += input.GetCamera() * time.Delta() * 1.0F / (1.0F + vel2D.Magnitude() * 0.1F) * 2.0F;
+	cameraDir.y = std::fmaxf(std::fminf(cameraDir.y,0.75F), 0.0F);
+	//cameraDir = cameraDir.Rotate(input.GetCamera().x * time.Delta() * 1.0F / (1.0F+vel2D.Magnitude()*0.1F) * 2.0F);
 	/*if (physics->velocity.Magnitude() > 0.1F)
 	{
 		cameraDir = Vector2(physics->velocity.x, physics->velocity.z).Normalized();

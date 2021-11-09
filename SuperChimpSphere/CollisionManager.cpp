@@ -22,6 +22,17 @@ void CollisionManager::DetectCollisions()
 	}
 }
 
+bool CollisionManager::SphereVsSphere(Vector3 a, float aRadius, Vector3 b, float bRadius)
+{
+	return (a-b).Magnitude() <= aRadius + bRadius;
+}
+
+bool CollisionManager::SphereVsPlane(Vector3 sphere, float radius, Vector3 planePos, Vector3 planeNormal)
+{
+	float difference = (sphere - planePos).DotProduct(planeNormal);
+	return (difference < radius);
+}
+
 void CollisionManager::DetectCollision(Collider* a, Collider* b)
 {
 	if (a->physics != nullptr)
@@ -37,10 +48,7 @@ void CollisionManager::DetectCollision(Collider* a, Collider* b)
 			SphereVsSphere(dynamic_cast<SphereCollider*>(a), dynamic_cast<SphereCollider*>(b));
 			break;
 		case Collider::ColliderType::MESH:
-			int numIterations = 0;
-			while (SphereVsMesh(dynamic_cast<SphereCollider*>(a), dynamic_cast<MeshCollider*>(b)) && numIterations++ <= 16)
-			{
-			}
+			SphereVsMesh(dynamic_cast<SphereCollider*>(a), dynamic_cast<MeshCollider*>(b));
 			break;
 		}
 		break;
@@ -67,7 +75,7 @@ void CollisionManager::SphereVsSphere(SphereCollider* a, SphereCollider* b)
 		b->OnCollision(Collision( hit, -normal, depth ));
 	}
 }
-bool CollisionManager::SphereVsMesh(SphereCollider* sphere, MeshCollider* mesh)
+void CollisionManager::SphereVsMesh(SphereCollider* sphere, MeshCollider* mesh)
 {
 	std::vector<Collision> collisions;
 	Vector3 relativePos = mesh->transform.position - sphere->transform.position;
@@ -77,7 +85,7 @@ bool CollisionManager::SphereVsMesh(SphereCollider* sphere, MeshCollider* mesh)
 		Vector3 A = mesh->mesh->vertices[mesh->mesh->triangles[i]] + relativePos;
 		Vector3 B = mesh->mesh->vertices[mesh->mesh->triangles[i + 2]] + relativePos;
 		Vector3 C = mesh->mesh->vertices[mesh->mesh->triangles[i + 1]] + relativePos;
-		Collision collision = SphereVsTriangle(sphere->radius, A, B, C);
+		Collision collision = SphereVsTriangle(sphere->radius, A, B, C, i);
 		if (collision.hit)
 		{
 			collisions.push_back(collision);
@@ -87,19 +95,26 @@ bool CollisionManager::SphereVsMesh(SphereCollider* sphere, MeshCollider* mesh)
 	if (static_cast<bool>(collisions.size()))
 	{
 		std::sort(collisions.begin(), collisions.end());
-		/*while (collisions.size() > 1)
+		sphere->OnCollision(collisions.front());
+		while (collisions.size() > 1U)
 		{
 			collisions.erase(collisions.begin());
-		}*/
-		sphere->OnCollision(collisions.front());
-		return true;
+			auto& collision = collisions.front();
+			Vector3 relativePos = mesh->transform.position - sphere->transform.position;
+			Vector3 A = mesh->mesh->vertices[mesh->mesh->triangles[collision.index]] + relativePos;
+			Vector3 B = mesh->mesh->vertices[mesh->mesh->triangles[collision.index + 2]] + relativePos;
+			Vector3 C = mesh->mesh->vertices[mesh->mesh->triangles[collision.index + 1]] + relativePos;
+			Collision test2 = SphereVsTriangle(sphere->radius, A, B, C, collision.index);
+			if (test2.hit)
+			{
+				sphere->OnCollision(test2);
+			}
+		}
 	}
-	return false;
 }
 
-Collision CollisionManager::SphereVsTriangle(float radius, Vector3& A, Vector3& B, Vector3& C)
+Collision CollisionManager::SphereVsTriangle(float radius, Vector3& A, Vector3& B, Vector3& C, unsigned int index)
 {
-	//////// YOU BLOOMIN IDIOT YOU HAVE TO DETECT IF THE CENTRE POINT OF THE SPHERE IS PAST EACH EDGE OF THE TRIANGLE AND ROTATE THE COLLISION NORMAL TOWARDS THE DISTANCE AWAY FROM THE EDGE!!!
 	/// Separating Axis Test (https://realtimecollisiondetection.net/blog/?p=103)
 	float r2 = radius * radius;
 	Vector3 normal = (B - A).CrossProduct(C - A);
@@ -141,7 +156,7 @@ Collision CollisionManager::SphereVsTriangle(float radius, Vector3& A, Vector3& 
 				(Q2.DotProduct(Q2) < r2 * e2 * e2 || Q2.DotProduct(QA) < 0) &&
 				(Q3.DotProduct(Q3) < r2 * e3 * e3 || Q3.DotProduct(QB) < 0))
 			{
-				return Collision(true, normal.Normalized(), distFromPlane + radius * normal.Magnitude());
+				return Collision(true, normal.Normalized(), distFromPlane + radius * normal.Magnitude(), index);
 			}
 		}
 	}

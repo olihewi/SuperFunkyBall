@@ -80,6 +80,7 @@ Vector2 Input::GetCamera()
 	Vector2 camera = GetStick(0U, Controller::Sticks::Right) +
 		Vector2(static_cast<float>(GetKey(Keys::RightArrow)) - static_cast<float>(GetKey(Keys::LeftArrow)),
 			static_cast<float>(GetKey(Keys::UpArrow)) - static_cast<float>(GetKey(Keys::DownArrow)));
+	camera.y = -camera.y;
 	if (camera.Magnitude() > 1.0F)
 	{
 		camera = camera.Normalized();

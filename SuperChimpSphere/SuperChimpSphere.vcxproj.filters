@@ -64,6 +64,12 @@
     <Filter Include="Source Files\Engine\GameComponents\Colliders">
       <UniqueIdentifier>{4e9d830b-9cf8-4dc4-b8a5-187a35bd3af9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Libraries">
+      <UniqueIdentifier>{fb02f874-38e9-4715-892f-2f43bf745860}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Libraries">
+      <UniqueIdentifier>{0ea5e601-f18f-47a1-af7c-1de3a4672fe4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -129,9 +135,6 @@
     <ClCompile Include="Sampler.cpp">
       <Filter>Source Files\Engine\Graphics\Components</Filter>
     </ClCompile>
-    <ClCompile Include="WICTextureLoader.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\Engine\GameObjects</Filter>
     </ClCompile>
@@ -162,11 +165,23 @@
     <ClCompile Include="Collider.cpp">
       <Filter>Source Files\Engine\GameComponents\Colliders</Filter>
     </ClCompile>
-    <ClCompile Include="PhysicsTestSphere.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MeshCollider.cpp">
       <Filter>Source Files\Engine\GameComponents\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files\Engine\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="WICTextureLoader.cpp">
+      <Filter>Source Files\Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="Goal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Collectible.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -242,12 +257,6 @@
     <ClInclude Include="Sampler.h">
       <Filter>Header Files\Engine\Graphics\Components</Filter>
     </ClInclude>
-    <ClInclude Include="OBJ_Loader.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="WICTextureLoader.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files\Engine\GameObjects</Filter>
     </ClInclude>
@@ -278,21 +287,39 @@
     <ClInclude Include="Input.h">
       <Filter>Header Files\Engine\Input</Filter>
     </ClInclude>
-    <ClInclude Include="PhysicsTestSphere.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MeshCollider.h">
       <Filter>Header Files\Engine\GameComponents\Colliders</Filter>
     </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>Header Files\Engine\GameComponents\Colliders</Filter>
     </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Header Files\Engine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="WICTextureLoader.h">
+      <Filter>Header Files\Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJ_Loader.h">
+      <Filter>Header Files\Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Json.h">
+      <Filter>Header Files\Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Goal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Collectible.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexShader.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="PixelShader.hlsl">
+    <FxCompile Include="PSTexturedFlat.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>

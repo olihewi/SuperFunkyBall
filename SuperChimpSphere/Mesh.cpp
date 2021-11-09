@@ -17,7 +17,8 @@ Mesh::Mesh(Renderer& renderer, std::string modelPath, std::wstring _texturePath)
     for (auto& vertex : loader.LoadedVertices)
     {
         vertices.push_back(vertex.Position);
-        uvs.push_back(vertex.TextureCoordinate);
+        uvs.push_back(Vector2(vertex.TextureCoordinate.x,1.0F-vertex.TextureCoordinate.y));
+        normals.push_back(vertex.Normal);
     }
     for (size_t i = 0; i < loader.LoadedIndices.size(); i += 3)
     {
@@ -40,13 +41,14 @@ void Mesh::Render(Renderer& renderer)
 void Mesh::OnMeshUpdated(Renderer& renderer)
 {
     components.clear();
-    components.push_back(PixelShader::GetOrCreate(renderer, L"PixelShader.cso"));
+    components.push_back(PixelShader::GetOrCreate(renderer, L"PSTexturedFlat.cso"));
     std::vector<Vertex> v;
 
     size_t j = uvs.size();
+    size_t k = normals.size();
     for (size_t i = 0; i < vertices.size(); i++)
     {
-        v.push_back(Vertex(vertices[i], i < j ? uvs[i] : Vector2s::zero));
+        v.push_back(Vertex(vertices[i], i < j ? uvs[i] : Vector2s::zero, i < k ? normals[i] : Vector3s::zero));
     }
 
     components.push_back(VertexShader::GetOrCreate(renderer, L"VertexShader.cso", elementDesc));

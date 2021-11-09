@@ -2,9 +2,6 @@
 
 Camera::Camera(Renderer& renderer, Player* _player) : player(_player), skybox(renderer,L"Textures/Skyboxes/Midday.png")
 {
-	transform.position = Vector3(0.0F, 1.0F, 5.0F);
-	//transform.rotation.x = -1.0F;
-	//transform = renderer.GetViewMatrix();
 }
 
 void Camera::Update(Input& input, GameTime& time)
@@ -12,7 +9,7 @@ void Camera::Update(Input& input, GameTime& time)
 	cameraOffset += input.GetAxis(0U,Controller::Axes::LeftTrigger) - input.GetAxis(0U,Controller::Axes::RightTrigger);
 	transform.position.x = player->transform.position.x;
 	transform.position.y = player->transform.position.y + 0.5F;
-	transform.position.z = player->transform.position.z + cameraOffset;
+	transform.position.z = player->transform.position.z;
 
 	Vector2 camera = input.GetCamera() * 0.5F * time.Delta();
 	rotation += camera;
@@ -28,12 +25,12 @@ void Camera::Update(Input& input, GameTime& time)
 void Camera::Render(Renderer& renderer)
 {
 	DirectX::XMMATRIX matrix = DirectX::XMMatrixIdentity();
-	renderer.SetViewMatrix(matrix * DirectX::XMMatrixRotationY(std::atan2f(player->cameraDir.x, -player->cameraDir.y)));
+	renderer.SetViewMatrix(matrix * DirectX::XMMatrixRotationY(player->cameraDir.x) * DirectX::XMMatrixRotationX(player->cameraDir.y));
 	renderer.SetModelMatrix(matrix);
 	skybox.Render(renderer);
 	matrix *= DirectX::XMMatrixTranslation(-transform.position.x, -transform.position.y, -player->transform.position.z);
-	matrix *= DirectX::XMMatrixRotationY(std::atan2f(player->cameraDir.x, -player->cameraDir.y));
-	matrix *= DirectX::XMMatrixRotationX(0.5F);
+	//matrix *= DirectX::XMMatrixRotationY(std::atan2f(player->cameraDir.x, -player->cameraDir.y));
+	matrix *= DirectX::XMMatrixRotationY(player->cameraDir.x) * DirectX::XMMatrixRotationX(player->cameraDir.y);
 	matrix *= DirectX::XMMatrixRotationZ(-player->cameraTilt.x * 5.0F) * DirectX::XMMatrixRotationX(-player->cameraTilt.y * 5.0F);
 	matrix *= DirectX::XMMatrixTranslation(0.0F, 0.0F, -cameraOffset);
 	renderer.SetViewMatrix(matrix);

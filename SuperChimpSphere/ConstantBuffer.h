@@ -12,9 +12,10 @@ public:
 		DirectX::XMMATRIX projection;
 	};
 
-	ConstantBuffer(ID3D11Device* device, const ConstantBufferData& bufferData);
+	ConstantBuffer(ID3D11Device* device, const ConstantBufferData& bufferData, unsigned int _slot = 0U);
 	void Load(ID3D11DeviceContext* context, const ConstantBufferData& bufferData);
 private:
 	Microsoft::WRL::ComPtr<ID3D11Buffer> constantBuffer;
+	unsigned int slot;
 };
 

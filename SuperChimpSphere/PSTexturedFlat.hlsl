@@ -1,7 +1,20 @@
+struct Light
+{
+    float3 direction;
+    float4 ambient;
+    float4 diffuse;
+};
+
+cbuffer lightBuffer : register(b1)
+{
+    Light light;
+}
+
 struct PixelShaderInput
 {
     float4 pos : SV_POSITION;
     float2 tex : TEXCOORD;
+    float3 normal : NORMAL;
 };
 
 Texture2D tex;

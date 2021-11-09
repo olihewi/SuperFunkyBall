@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Collectible.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Colour.cpp" />
@@ -160,15 +161,17 @@
     <ClCompile Include="GameComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTime.cpp" />
+    <ClCompile Include="Goal.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InputLayout.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshCollider.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Physics.cpp" />
-    <ClCompile Include="PhysicsTestSphere.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Renderer.cpp" />
@@ -188,6 +191,7 @@
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Collectible.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Collision.h" />
@@ -198,18 +202,21 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameSettings.h" />
     <ClInclude Include="GameTime.h" />
+    <ClInclude Include="Goal.h" />
     <ClInclude Include="GraphicsComponent.h" />
     <ClInclude Include="GraphicsComponents.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="InputLayout.h" />
+    <ClInclude Include="Json.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshCollider.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="OBJ_Loader.h" />
     <ClInclude Include="Physics.h" />
-    <ClInclude Include="PhysicsTestSphere.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Renderer.h" />
@@ -227,7 +234,7 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="PixelShader.hlsl">
+    <FxCompile Include="PSTexturedFlat.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>

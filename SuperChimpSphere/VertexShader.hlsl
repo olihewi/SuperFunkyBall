@@ -9,12 +9,14 @@ struct VertexShaderInput
 {
     float3 pos : POSITION;
     float2 tex : TEXCOORD;
+    float3 normal : NORMAL;
 };
 
 struct PixelShaderInput
 {
     float4 pos : SV_POSITION;
     float2 tex : TEXCOORD;
+    float3 normal : NORMAL;
 };
 
 PixelShaderInput main(VertexShaderInput input)
@@ -28,6 +30,7 @@ PixelShaderInput main(VertexShaderInput input)
     pos = mul(pos, projection);
     vertexShaderOutput.pos = pos;
     vertexShaderOutput.tex = input.tex;
+    vertexShaderOutput.normal = input.normal;
 
     return vertexShaderOutput;
 }
