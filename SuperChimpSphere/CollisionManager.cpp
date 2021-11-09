@@ -5,7 +5,7 @@
 std::map<unsigned int, Collider*> CollisionManager::colliders;
 unsigned int CollisionManager::index = 0;
 
-void CollisionManager::DetectCollisions()
+void CollisionManager::DetectCollisions(float dt)
 {
 	unsigned int x = 0;
 	unsigned int y = 0;
@@ -15,7 +15,7 @@ void CollisionManager::DetectCollisions()
 		{
 			if (x++ > y)
 			{
-				DetectCollision(i.second, j.second);
+				DetectCollision(i.second, j.second, dt);
 			}
 		}
 		y++;
@@ -33,7 +33,7 @@ bool CollisionManager::SphereVsPlane(Vector3 sphere, float radius, Vector3 plane
 	return (difference < radius);
 }
 
-void CollisionManager::DetectCollision(Collider* a, Collider* b)
+void CollisionManager::DetectCollision(Collider* a, Collider* b, float dt)
 {
 	if (a->physics != nullptr)
 	{
@@ -45,10 +45,10 @@ void CollisionManager::DetectCollision(Collider* a, Collider* b)
 		switch (b->colliderType)
 		{
 		case Collider::ColliderType::SPHERE:
-			SphereVsSphere(dynamic_cast<SphereCollider*>(a), dynamic_cast<SphereCollider*>(b));
+			SphereVsSphere(dynamic_cast<SphereCollider*>(a), dynamic_cast<SphereCollider*>(b), dt);
 			break;
 		case Collider::ColliderType::MESH:
-			SphereVsMesh(dynamic_cast<SphereCollider*>(a), dynamic_cast<MeshCollider*>(b));
+			SphereVsMesh(dynamic_cast<SphereCollider*>(a), dynamic_cast<MeshCollider*>(b), dt);
 			break;
 		}
 		break;
@@ -56,14 +56,14 @@ void CollisionManager::DetectCollision(Collider* a, Collider* b)
 		switch (b->colliderType)
 		{
 		case Collider::ColliderType::SPHERE:
-			SphereVsMesh(dynamic_cast<SphereCollider*>(b), dynamic_cast<MeshCollider*>(a));
+			SphereVsMesh(dynamic_cast<SphereCollider*>(b), dynamic_cast<MeshCollider*>(a), dt);
 			break;
 		}
 		break;
 	}
 }
 
-void CollisionManager::SphereVsSphere(SphereCollider* a, SphereCollider* b)
+void CollisionManager::SphereVsSphere(SphereCollider* a, SphereCollider* b, float dt)
 {
 	Vector3 difference = a->transform.position - b->transform.position;
 	bool hit = difference.Magnitude() <= a->radius + b->radius;
@@ -71,11 +71,11 @@ void CollisionManager::SphereVsSphere(SphereCollider* a, SphereCollider* b)
 	{
 		Vector3 normal = difference.Normalized();
 		float depth = a->radius + b->radius - difference.Magnitude();
-		a->OnCollision(Collision( hit, normal, depth ));
-		b->OnCollision(Collision( hit, -normal, depth ));
+		a->OnCollision(Collision( hit, normal, depth ), dt);
+		b->OnCollision(Collision( hit, -normal, depth ), dt);
 	}
 }
-void CollisionManager::SphereVsMesh(SphereCollider* sphere, MeshCollider* mesh)
+void CollisionManager::SphereVsMesh(SphereCollider* sphere, MeshCollider* mesh, float dt)
 {
 	std::vector<Collision> collisions;
 	Vector3 relativePos = mesh->transform.position - sphere->transform.position;
@@ -95,7 +95,7 @@ void CollisionManager::SphereVsMesh(SphereCollider* sphere, MeshCollider* mesh)
 	if (static_cast<bool>(collisions.size()))
 	{
 		std::sort(collisions.begin(), collisions.end());
-		sphere->OnCollision(collisions.front());
+		sphere->OnCollision(collisions.front(), dt);
 		while (collisions.size() > 1U)
 		{
 			collisions.erase(collisions.begin());
@@ -107,7 +107,7 @@ void CollisionManager::SphereVsMesh(SphereCollider* sphere, MeshCollider* mesh)
 			Collision test2 = SphereVsTriangle(sphere->radius, A, B, C, collision.index);
 			if (test2.hit)
 			{
-				sphere->OnCollision(test2);
+				sphere->OnCollision(test2, dt);
 			}
 		}
 	}

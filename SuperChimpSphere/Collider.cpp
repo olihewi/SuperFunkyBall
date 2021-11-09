@@ -11,10 +11,10 @@ Collider::~Collider()
 	CollisionManager::colliders.erase(index);
 }
 
-void Collider::OnCollision(Collision collision)
+void Collider::OnCollision(Collision collision, float dt)
 {
 	if (physics != nullptr)
 	{
-		physics->ResolveCollision(collision);
+		physics->ResolveCollision(collision, dt);
 	}
 }

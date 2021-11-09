@@ -17,5 +17,7 @@ private:
 	std::vector<std::unique_ptr<Collectible>> collectibles;
 	int collectiblesCollected = 0;
 	Vector3 spawnPoint;
+public:
+	bool finished = false;
 };
 

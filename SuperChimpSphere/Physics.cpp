@@ -18,11 +18,11 @@ void Physics::Update(GameTime& time)
 	}*/
 }
 
-void Physics::ResolveCollision(Collision& collision)
+void Physics::ResolveCollision(Collision& collision, float dt)
 {
 	Vector3 resultant = collision.normal * collision.penetration;
 	transform.position += resultant;
-	velocity += resultant * 60.0F;
+	velocity += resultant * (1.0F / dt);
 	touchingSurface = true;
 	surfaceNormal = collision.normal;
 }

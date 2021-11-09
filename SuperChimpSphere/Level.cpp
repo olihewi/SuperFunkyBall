@@ -49,7 +49,7 @@ void Level::Update(Input& input, GameTime& time)
 	if (CollisionManager::SphereVsPlane(player->transform.position, 0.5F, goal->transform.position, Vector3(0.0F, 0.0F, 1.0F)) &&
 		CollisionManager::SphereVsSphere(player->transform.position, 0.25F, goal->transform.position, 0.5F))
 	{
-		player->transform.position.y += 10.0F;
+		finished = true;
 	}
 	// Pickup collectibles
 	for (auto& collectible : collectibles)

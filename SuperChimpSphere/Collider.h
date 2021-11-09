@@ -12,7 +12,7 @@ public:
 	};
 	Collider(ColliderType _colliderType, Transform& _transform, Physics* _physics);
 	~Collider();
-	void OnCollision(Collision collision);
+	void OnCollision(Collision collision, float dt);
 	Transform& transform;
 	ColliderType colliderType;
 	Physics* physics;

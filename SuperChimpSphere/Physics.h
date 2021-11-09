@@ -8,7 +8,7 @@ class Physics : public GameComponent
 public:
 	Physics(Transform& _transform);
 	void Update(GameTime& time) override;
-	void ResolveCollision(Collision& collision);
+	void ResolveCollision(Collision& collision, float dt);
 private:
 	Transform& transform;
 public:

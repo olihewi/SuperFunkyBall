@@ -4,6 +4,8 @@
 #include "Player.h"
 #include "Level.h"
 #include "CollisionManager.h"
+#include <fstream>
+#include "Json.h"
 
 App::App(const GameSettings& _settings) : settings(_settings), window(static_cast<int>(settings.video.resolution.x),static_cast<int>(settings.video.resolution.y),"ASGE"), input(window)
 {
@@ -16,7 +18,20 @@ App::App(const GameSettings& _settings) : settings(_settings), window(static_cas
 		},
 		DirectX::XMMatrixIdentity));*/
 	//mesh = std::make_unique<Mesh>(Mesh::CreatePrimitiveSphere(window.GetRenderer(), 1.0F, 20U));
-	gameObjects.push_back(std::make_unique<Level>(window.GetRenderer(),"Levels/stage2.json"));
+	std::ifstream file;
+	file.open("Levels/levelSequence.json");
+	if (file.is_open())
+	{
+		nlohmann::json j;
+		file >> j;
+		levelSequence = j["sequence"].get<std::vector<std::string>>();
+		file.close();
+	}
+	if (!levelSequence.empty())
+	{
+		currentLevel = std::make_unique<Level>(window.GetRenderer(),levelSequence.front());
+		levelSequence.erase(levelSequence.begin());
+	}
 	//gameObjects.push_back(std::make_unique<Model>(window.GetRenderer(), "Models/dog.obj", L"Models/dog.png"));
 }
 
@@ -44,11 +59,18 @@ void App::Update()
 {
 	time.Tick();
 	input.Tick();
+	currentLevel->Update(input, time);
 	for (auto& gameObject : gameObjects)
 	{
 		gameObject->Update(input, time);
 	}
-	CollisionManager::DetectCollisions();
+	CollisionManager::DetectCollisions(time.Delta());
+	if (currentLevel->finished && !levelSequence.empty())
+	{
+		CollisionManager::colliders.clear();
+		currentLevel = std::make_unique<Level>(window.GetRenderer(), levelSequence.front());
+		levelSequence.erase(levelSequence.begin());
+	}
 }
 
 void App::Render()
@@ -65,6 +87,7 @@ void App::Render()
 		ttfps = 1.0F;
 	}
 	ttfps -= time.Delta();
+	currentLevel->Render(window.GetRenderer());
 	for (auto& gameObject : gameObjects)
 	{
 		gameObject->Render(window.GetRenderer());
