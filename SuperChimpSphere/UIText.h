@@ -4,7 +4,7 @@
 class UIText : public GameObject
 {
 public:
-	UIText(Renderer& renderer, std::string _text);
+	UIText(Renderer& renderer, std::string _text, Vector2 position);
 	void Render(Renderer& renderer) override;
 	std::array<std::unique_ptr<UIImage>, 16> characters;
 	std::string text;

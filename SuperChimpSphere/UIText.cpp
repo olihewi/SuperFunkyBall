@@ -1,11 +1,11 @@
 #include "UIText.h"
 
-UIText::UIText(Renderer& renderer, std::string _text) : text(_text)
+UIText::UIText(Renderer& renderer, std::string _text, Vector2 position) : text(_text)
 {
 	float sep = 0.0F;
 	for (auto& c : characters)
 	{
-		c = std::make_unique<UIImage>(renderer, "Textures/Font.png", Vector2(0.1F, 0.1F), Vector2(sep, 0.0F));
+		c = std::make_unique<UIImage>(renderer, "Textures/Font.png", Vector2(0.1F, 0.1F), position + Vector2s::right * sep);
 		sep += 0.05F;
 	}
 }

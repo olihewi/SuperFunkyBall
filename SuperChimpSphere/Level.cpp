@@ -4,11 +4,11 @@
 #include "Json.h"
 #include <fstream>
 #include "CollisionManager.h"
+#include <sstream>
 
 Level::Level(Renderer& renderer, const std::string& levelFile)
 {
 	light = std::make_unique<Light>(renderer, Vector3{ 0.25F,1.0F,0.25F }.Normalized(), DirectX::XMFLOAT4(0.5F,0.5F,0.5F,1.0F), DirectX::XMFLOAT4(1.0F,1.0F,1.0F,1.0F));
-	playerScore = std::make_unique<UIText>(renderer, "Hello World!");
 	std::ifstream file;
 	file.open(levelFile);
 	if (file.is_open())
@@ -39,6 +39,9 @@ Level::Level(Renderer& renderer, const std::string& levelFile)
 		{
 			collectibles.push_back(std::make_unique<Collectible>(renderer, 1, Vector3(i[0], i[1], i[2])));
 		}
+		playerScore = std::make_unique<UIText>(renderer, "0/" + std::to_string(collectibles.size()), Vector2(-0.9F, 0.8F));
+		playerTime = std::make_unique<UIText>(renderer, "60.00", Vector2(0.0F,0.8F));
+		playerSpeed = std::make_unique<UIText>(renderer, "60.00", Vector2(-0.9F, -0.8F));
 	}
 }
 
@@ -70,6 +73,13 @@ void Level::Update(Input& input, GameTime& time)
 		}
 		collectible->Update(input, time);
 	}
+	levelTime -= time.Delta();
+	std::stringstream stream;
+	stream << std::fixed << std::setprecision(2) << levelTime;
+	playerTime->text = stream.str();
+	stream = {};
+	stream << std::fixed << std::setprecision(0) << (player->physics->velocity + Vector3s::up * time.Delta() * player->physics->gravityMultiplier).Magnitude() * 4.0F << "mph";
+	playerSpeed->text = stream.str();
 	GameObject::Update(input, time);
 }
 
@@ -87,5 +97,7 @@ void Level::Render(Renderer& renderer)
 		collectible->Render(renderer);
 	}
 	playerScore->Render(renderer);
+	playerTime->Render(renderer);
+	playerSpeed->Render(renderer);
 	GameObject::Render(renderer);
 }

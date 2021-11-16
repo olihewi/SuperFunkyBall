@@ -18,8 +18,12 @@ private:
 	std::unique_ptr<Light> light;
 	std::vector<std::unique_ptr<Goal>> goals;
 	std::vector<std::unique_ptr<Collectible>> collectibles;
+
 	std::unique_ptr<UIText> playerScore;
+	std::unique_ptr<UIText> playerTime;
+	std::unique_ptr<UIText> playerSpeed;
 	int collectiblesCollected = 0;
+	float levelTime = 60.0F;
 	Vector3 spawnPoint;
 public:
 	bool finished = false;

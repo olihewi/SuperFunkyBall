@@ -8,7 +8,7 @@ public:
 	Player(Renderer& renderer);
 	void Update(Input& input, GameTime& time) override;
 	void Render(Renderer& renderer) override;
-private:
+public:
 	Physics* physics;
 	SphereCollider* collider;
 	
