@@ -30,7 +30,7 @@ PixelShaderInput main(VertexShaderInput input)
     pos = mul(pos, projection);
     vertexShaderOutput.pos = pos;
     vertexShaderOutput.tex = input.tex;
-    vertexShaderOutput.normal = input.normal;
+    vertexShaderOutput.normal = mul(input.normal,model);
 
     return vertexShaderOutput;
 }

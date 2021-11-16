@@ -7,12 +7,15 @@
 
 Level::Level(Renderer& renderer, const std::string& levelFile)
 {
+	light = std::make_unique<Light>(renderer, Vector3{ 0.25F,1.0F,0.25F }.Normalized(), DirectX::XMFLOAT4(0.5F,0.5F,0.5F,1.0F), DirectX::XMFLOAT4(1.0F,1.0F,1.0F,1.0F));
+	playerScore = std::make_unique<UIText>(renderer, "Hello World!");
 	std::ifstream file;
 	file.open(levelFile);
 	if (file.is_open())
 	{
 		nlohmann::json j;
 		file >> j;
+		file.close();
 		// Player
 		player = std::make_unique<Player>( renderer );
 		auto spawn = j["spawn"];
@@ -22,12 +25,14 @@ Level::Level(Renderer& renderer, const std::string& levelFile)
 		camera = std::make_unique<Camera>( renderer, player.get() );
 		// Level
 		std::string meshPath = j["mesh"].get<std::string>();
-		Mesh* mesh = dynamic_cast<Mesh*>(AddComponent(std::make_unique<Mesh>(renderer, meshPath, L"Textures/UV_Checker.png")));
+		Mesh* mesh = dynamic_cast<Mesh*>(AddComponent(std::make_unique<Mesh>(renderer, meshPath, "Textures/StagePalette.png")));
 		AddComponent(std::make_unique<MeshCollider>(transform, mesh));
-		// Goal
-		auto goalPos = j["goal"];
-		goal = std::make_unique<Goal>(renderer, Vector3(goalPos[0][0], goalPos[0][1], goalPos[0][2]), Vector3(goalPos[1][0], goalPos[1][1], goalPos[1][2]));
-		file.close();
+		// Goals
+		for (auto& jgoal : j["goals"])
+		{
+			auto goalPos = jgoal["position"];
+			goals.push_back(std::make_unique<Goal>(renderer, Vector3(goalPos[0][0], goalPos[0][1], goalPos[0][2]), Vector3(goalPos[1][0], goalPos[1][1], goalPos[1][2]), "Levels/" + jgoal["nextLevel"].get<std::string>() + ".json"));
+		}
 		// Collectibles
 		auto cols = j["collectibles"];
 		for (auto i : cols)
@@ -46,10 +51,13 @@ void Level::Update(Input& input, GameTime& time)
 		player->transform.position = spawnPoint;
 	}
 	// Check for Victory
-	if (CollisionManager::SphereVsPlane(player->transform.position, 0.5F, goal->transform.position, Vector3(0.0F, 0.0F, 1.0F)) &&
-		CollisionManager::SphereVsSphere(player->transform.position, 0.25F, goal->transform.position, 0.5F))
+	for (auto& goal : goals)
 	{
-		finished = true;
+		if (CollisionManager::SphereVsPoint(player->transform.position, 0.5F, goal->transform.position))
+		{
+			nextLevel = goal->nextLevel;
+			finished = true;
+		}
 	}
 	// Pickup collectibles
 	for (auto& collectible : collectibles)
@@ -58,6 +66,7 @@ void Level::Update(Input& input, GameTime& time)
 		{
 			collectible->collectionTimer = 0.0F;
 			collectiblesCollected += collectible->value;
+			playerScore->text = std::to_string(collectiblesCollected) + "/" + std::to_string(collectibles.size());
 		}
 		collectible->Update(input, time);
 	}
@@ -66,12 +75,17 @@ void Level::Update(Input& input, GameTime& time)
 
 void Level::Render(Renderer& renderer)
 {
+	light->Render(renderer);
 	player->Render(renderer);
 	camera->Render(renderer);
-	goal->Render(renderer);
+	for (auto& goal : goals)
+	{
+		goal->Render(renderer);
+	}
 	for (auto& collectible : collectibles)
 	{
 		collectible->Render(renderer);
 	}
+	playerScore->Render(renderer);
 	GameObject::Render(renderer);
 }

@@ -33,4 +33,5 @@ void ConstantBuffer::Load(ID3D11DeviceContext* context, const ConstantBufferData
 		1U, // Number of buffers
 		constantBuffer.GetAddressOf() // Constant Buffer
 	);
+	
 }

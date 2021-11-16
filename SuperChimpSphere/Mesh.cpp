@@ -5,12 +5,17 @@
 #include <locale>
 #include <codecvt>
 
-Mesh::Mesh(Renderer& renderer, std::vector<Vector3> _vertices, std::vector<unsigned int> _triangles, std::vector<Vector2> _uvs, std::wstring _texturePath) : vertices(_vertices), triangles(_triangles), uvs(_uvs), texturePath(_texturePath)
+Mesh::Mesh(Renderer& renderer, std::vector<Vector3> _vertices, std::vector<unsigned int> _triangles, std::vector<Vector2> _uvs, std::string _texturePath, std::wstring _pixelShaderPath) : vertices(_vertices), triangles(_triangles), uvs(_uvs), texturePath(_texturePath), pixelShaderPath(_pixelShaderPath)
 {
     OnMeshUpdated(renderer);
 }
 
-Mesh::Mesh(Renderer& renderer, std::string modelPath, std::wstring _texturePath) : texturePath(_texturePath)
+Mesh::Mesh(Renderer& renderer, std::vector<Vector3> _vertices, std::vector<unsigned int> _triangles, std::vector<Vector2> _uvs, std::vector<Vector3> _normals, std::string _texturePath, std::wstring _pixelShaderPath) : vertices(_vertices), triangles(_triangles), uvs(_uvs), normals(_normals), texturePath(_texturePath), pixelShaderPath(_pixelShaderPath)
+{
+    OnMeshUpdated(renderer);
+}
+
+Mesh::Mesh(Renderer& renderer, std::string modelPath, std::string _texturePath) : texturePath(_texturePath)
 {
     objl::Loader loader;
     loader.LoadFile(modelPath);
@@ -26,6 +31,7 @@ Mesh::Mesh(Renderer& renderer, std::string modelPath, std::wstring _texturePath)
         triangles.push_back(loader.LoadedIndices[i+2]);
         triangles.push_back(loader.LoadedIndices[i+1]);
     }
+    //texturePath = loader.LoadedMaterials[0].map_d;
     OnMeshUpdated(renderer);
 }
 
@@ -41,7 +47,7 @@ void Mesh::Render(Renderer& renderer)
 void Mesh::OnMeshUpdated(Renderer& renderer)
 {
     components.clear();
-    components.push_back(PixelShader::GetOrCreate(renderer, L"PSTexturedFlat.cso"));
+    components.push_back(PixelShader::GetOrCreate(renderer, pixelShaderPath));
     std::vector<Vertex> v;
 
     size_t j = uvs.size();
@@ -51,7 +57,7 @@ void Mesh::OnMeshUpdated(Renderer& renderer)
         v.push_back(Vertex(vertices[i], i < j ? uvs[i] : Vector2s::zero, i < k ? normals[i] : Vector3s::zero));
     }
 
-    components.push_back(VertexShader::GetOrCreate(renderer, L"VertexShader.cso", elementDesc));
+    components.push_back(VertexShader::GetOrCreate(renderer, L"VS3D.cso", elementDesc));
     components.push_back(std::make_shared<VertexBuffer>(renderer, v));
     components.push_back(std::make_shared<TriangleBuffer>(renderer, triangles));
     components.push_back(Texture::GetOrCreate(renderer, texturePath));
@@ -139,11 +145,12 @@ std::unique_ptr<Mesh> Mesh::CreatePrimitiveCube(Renderer& renderer, Vector3 size
     return std::make_unique<Mesh>(renderer,v,t,u);
 }
 
-std::unique_ptr<Mesh> Mesh::CreatePrimitiveSphere(Renderer& renderer, float radius, unsigned int resolution)
+std::unique_ptr<Mesh> Mesh::CreatePrimitiveSphere(Renderer& renderer, float radius, unsigned int resolution, std::string _filePath)
 {
     std::vector<Vector3> v;
     std::vector<unsigned int> t;
     std::vector<Vector2> u;
+    std::vector<Vector3> n;
 
     //v.push_back({ 0.0F, +radius, 0.0F });
     //u.push_back({ 0.0F, 0.0F });
@@ -157,12 +164,13 @@ std::unique_ptr<Mesh> Mesh::CreatePrimitiveSphere(Renderer& renderer, float radi
         for (unsigned int j = 0; j <= resolution; j++)
         {
             float theta = j * thetaStep;
-            Vector3 pos
+            Vector3 normal
             {
-                radius * std::sinf(phi) * std::cosf(theta),
-                radius * std::cosf(phi),
-                radius * std::sinf(phi) * std::sinf(theta)
+                std::sinf(phi) * std::cosf(theta),
+                std::cosf(phi),
+                std::sinf(phi) * std::sinf(theta)
             };
+            Vector3 pos = normal * radius;
             Vector2 uv
             {
                 theta / DirectX::XM_2PI,
@@ -170,6 +178,7 @@ std::unique_ptr<Mesh> Mesh::CreatePrimitiveSphere(Renderer& renderer, float radi
             };
             v.push_back(pos);
             u.push_back(uv);
+            n.push_back(normal);
         }
     }
 
@@ -210,5 +219,5 @@ std::unique_ptr<Mesh> Mesh::CreatePrimitiveSphere(Renderer& renderer, float radi
     }*/
 
 
-    return std::make_unique<Mesh>(renderer,v,t,u);
+    return std::make_unique<Mesh>(renderer,v,t,u,n, _filePath);
 }

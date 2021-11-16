@@ -2,9 +2,9 @@
 #include "Mesh.h"
 #include "MeshCollider.h"
 
-Goal::Goal(Renderer& renderer, Vector3 _position, Vector3 rotation)
+Goal::Goal(Renderer& renderer, Vector3 _position, Vector3 rotation, std::string _nextLevel) : nextLevel(_nextLevel)
 {
-	auto mesh = dynamic_cast<Mesh*>(AddComponent(std::make_unique<Mesh>(renderer, "Models/goal.obj", L"Models/goal.png")));
+	auto mesh = dynamic_cast<Mesh*>(AddComponent(std::make_unique<Mesh>(renderer, "Models/goal.obj", "Models/goal.png")));
 	//AddComponent(std::make_unique<MeshCollider>(transform, mesh));
 	transform.position = _position;
 	rotation *= DirectX::XM_PI / 180.0F;

@@ -11,6 +11,8 @@ Renderer::Renderer(HWND hWnd)
 {
 	RECT rect;
 	GetClientRect(hWnd, &rect);
+	dimensions = Vector2(static_cast<float>(rect.right - rect.left),
+		static_cast<float>(rect.bottom - rect.top));
 	DXGI_SWAP_CHAIN_DESC sd{};
 	sd.BufferDesc.Width = 0;
 	sd.BufferDesc.Height = 0;
@@ -86,6 +88,23 @@ Renderer::Renderer(HWND hWnd)
 	viewport.TopLeftY = 0;
 	context->RSSetViewports(1U, &viewport);
 
+	/*Microsoft::WRL::ComPtr<ID3D11BlendState> blendState;
+	D3D11_BLEND_DESC blendDesc = {};
+
+	blendDesc.RenderTarget[0].BlendEnable = TRUE;
+	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ZERO;
+	blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	auto bsHR = device->CreateBlendState(&blendDesc, &blendState);
+	float blendFactor[4] = { 0.0F, 0.0F, 0.0F , 0.0F };
+	UINT sampleMask = 0xffffffff;
+	context->OMSetBlendState(blendState.Get(), blendFactor, sampleMask);*/
+
 	SetProjectionMatrix(DirectX::XMMatrixPerspectiveRH(1.0F, viewport.Height / viewport.Width, 0.5F, 100.0F));
 }
 
@@ -114,6 +133,11 @@ ID3D11Device* Renderer::GetDevice()
 ID3D11DeviceContext* Renderer::GetContext()
 {
 	return context.Get();
+}
+
+Vector2 Renderer::GetDimensions()
+{
+	return dimensions;
 }
 
 void Renderer::SetModelMatrix(const DirectX::XMMATRIX& modelMatrix)

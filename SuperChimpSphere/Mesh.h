@@ -11,14 +11,15 @@
 class Mesh : public GameComponent
 {
 public:
-	Mesh(Renderer& renderer, std::vector<Vector3> _vertices, std::vector<unsigned int> _triangles, std::vector<Vector2> _uvs, std::wstring _texturePath = L"Textures/UV_Checker.png");
-	Mesh(Renderer& renderer, std::string filePath, std::wstring _texturePath);
+	Mesh(Renderer& renderer, std::vector<Vector3> _vertices, std::vector<unsigned int> _triangles, std::vector<Vector2> _uvs, std::string _texturePath = "Textures/UV_Checker.png", std::wstring _pixelShaderPath = L"PSTexturedLit.cso");
+	Mesh(Renderer& renderer, std::vector<Vector3> _vertices, std::vector<unsigned int> _triangles, std::vector<Vector2> _uvs, std::vector<Vector3> _normals, std::string _texturePath = "Textures/UV_Checker.png", std::wstring _pixelShaderPath = L"PSTexturedLit.cso");
+	Mesh(Renderer& renderer, std::string filePath, std::string _texturePath);
 	void Render(Renderer& renderer);
 private:
 	void OnMeshUpdated(Renderer& renderer);
 public:
 	static std::unique_ptr<Mesh> CreatePrimitiveCube(Renderer& renderer, Vector3 size);
-	static std::unique_ptr<Mesh> CreatePrimitiveSphere(Renderer& renderer, float radius, unsigned int resolution);
+	static std::unique_ptr<Mesh> CreatePrimitiveSphere(Renderer& renderer, float radius, unsigned int resolution, std::string _texturePath = "Textures/UV_Checker.png");
 	// should be protected but hey ho
 	std::vector<Vector3> vertices;
 	std::vector<unsigned int> triangles;
@@ -28,7 +29,8 @@ public:
 protected:
 	std::vector<std::shared_ptr<GraphicsComponent>> components;
 
-	std::wstring texturePath = L"";
+	std::string texturePath = "";
+	std::wstring pixelShaderPath = L"PSTexturedLit.cso";
 
 	const std::vector<D3D11_INPUT_ELEMENT_DESC> elementDesc
 	{

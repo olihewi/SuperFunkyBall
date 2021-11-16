@@ -4,6 +4,8 @@
 #include "Camera.h"
 #include "Goal.h"
 #include "Collectible.h"
+#include "Light.h"
+#include "UIText.h"
 class Level : public GameObject
 {
 public:
@@ -13,11 +15,14 @@ public:
 private:
 	std::unique_ptr<Player> player;
 	std::unique_ptr<Camera> camera;
-	std::unique_ptr<Goal> goal;
+	std::unique_ptr<Light> light;
+	std::vector<std::unique_ptr<Goal>> goals;
 	std::vector<std::unique_ptr<Collectible>> collectibles;
+	std::unique_ptr<UIText> playerScore;
 	int collectiblesCollected = 0;
 	Vector3 spawnPoint;
 public:
 	bool finished = false;
+	std::string nextLevel;
 };
 

@@ -1,6 +1,6 @@
 #include "Skybox.h"
 
-Skybox::Skybox(Renderer& renderer, std::wstring _texturePath) : 
+Skybox::Skybox(Renderer& renderer, std::string _texturePath) : 
     Mesh(renderer, 
         { // Bottom
             { -50.0F, -50.0F, -50.0F },
@@ -73,6 +73,7 @@ Skybox::Skybox(Renderer& renderer, std::wstring _texturePath) :
             { 0.0F, 2.0 / 3.0F },
             { 0.0F, 1.0 / 3.0F },
         },
-        _texturePath)
+        _texturePath,
+        L"PSTexturedFlat.cso")
 {
 }

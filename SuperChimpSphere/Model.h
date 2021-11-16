@@ -3,6 +3,6 @@
 class Model : public GameObject
 {
 public:
-	Model(Renderer& renderer, std::string modelPath, std::wstring texturePath);
+	Model(Renderer& renderer, std::string modelPath, std::string texturePath);
 };
 

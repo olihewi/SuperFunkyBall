@@ -5,6 +5,7 @@
 #include <vector>
 #include "ConstantBuffer.h"
 #include <memory>
+#include "Vector3.h"
 class Renderer
 {
 public:
@@ -16,6 +17,7 @@ public:
 	// Getters
 	ID3D11Device* GetDevice();
 	ID3D11DeviceContext* GetContext();
+	Vector2 GetDimensions();
 
 	void SetModelMatrix(const DirectX::XMMATRIX& modelMatrix);
 	void SetViewMatrix(const DirectX::XMMATRIX& viewMatrix);
@@ -33,7 +35,6 @@ private:
 	ConstantBuffer::ConstantBufferData modelViewProjection
 	{
 		DirectX::XMMatrixIdentity(),
-		//DirectX::XMMatrixTranslation(0.0F, 1.0F, 2.0F),
 		{-1.00000000f, 0.00000000f,  0.00000000f,  0.00000000f,
 			 0.00000000f, 0.89442718f,  0.44721359f,  0.00000000f,
 			 0.00000000f, 0.44721359f, -0.89442718f, -2.23606800f,
@@ -42,8 +43,8 @@ private:
 			0.0f,   1.5F,  0.0f,  0.0f,
 			0.0f,   0.0f,   -1.0f, -0.01f,
 			0.0f,   0.0f,   -1.0f,  0.0f}
-		//DirectX::XMMatrixPerspectiveLH(1.0F, 720.0F / 1080.0F, 0.5F, 10.0F)
 	};
 	std::unique_ptr<ConstantBuffer> constantBuffer;
+	Vector2 dimensions;
 };
 

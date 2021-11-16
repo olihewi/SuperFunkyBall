@@ -17,6 +17,7 @@ public:
 	bool touchingSurface = false;
 	float drag = 0.5F;
 	float mass = 1.0F;
+	float bounciness = 0.0F;
 	const float gravityMultiplier = 9.81F;
 };
 

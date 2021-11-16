@@ -11,18 +11,14 @@ void Physics::Update(GameTime& time)
 	velocity = velocity / (1 + drag * delta);
 	Vector3 v = velocity * delta;
 	transform.position += v;
-	/*if (transform.position.y <= 0.0F && velocity.y < 0.0F)
-	{
-		transform.position.y = 0.0F;
-		velocity.y = 0.0F;
-	}*/
 }
 
 void Physics::ResolveCollision(Collision& collision, float dt)
 {
 	Vector3 resultant = collision.normal * collision.penetration;
+	float ms = 1.0F / dt;
 	transform.position += resultant;
-	velocity += resultant * (1.0F / dt);
+	velocity += resultant * ms;
 	touchingSurface = true;
 	surfaceNormal = collision.normal;
 }

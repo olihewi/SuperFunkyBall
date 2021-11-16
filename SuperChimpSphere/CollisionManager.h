@@ -9,6 +9,7 @@ public:
 	static std::map<unsigned int, Collider*> colliders;
 	static bool SphereVsSphere(Vector3 a, float aRadius, Vector3 b, float bRadius);
 	static bool SphereVsPlane(Vector3 sphere, float radius, Vector3 planePos, Vector3 planeNormal);
+	static bool SphereVsPoint(Vector3 sphere, float radius, Vector3 point);
 	static unsigned int index;
 private:
 	static void DetectCollision(Collider* a, Collider* b, float dt);

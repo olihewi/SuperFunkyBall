@@ -33,6 +33,11 @@ bool CollisionManager::SphereVsPlane(Vector3 sphere, float radius, Vector3 plane
 	return (difference < radius);
 }
 
+bool CollisionManager::SphereVsPoint(Vector3 sphere, float radius, Vector3 point)
+{
+	return (sphere - point).Magnitude() <= radius;
+}
+
 void CollisionManager::DetectCollision(Collider* a, Collider* b, float dt)
 {
 	if (a->physics != nullptr)
@@ -94,6 +99,15 @@ void CollisionManager::SphereVsMesh(SphereCollider* sphere, MeshCollider* mesh, 
 	}
 	if (static_cast<bool>(collisions.size()))
 	{
+		/*Collision avg = Collision(true, Vector3s::zero, 0.0F, 0U);
+		for (auto& collision : collisions)
+		{
+			avg.normal += collision.normal;
+			avg.penetration += collision.penetration;
+		}
+		avg.normal /= collisions.size();
+		avg.penetration /= collisions.size();
+		sphere->OnCollision(avg, dt);*/
 		std::sort(collisions.begin(), collisions.end());
 		sphere->OnCollision(collisions.front(), dt);
 		while (collisions.size() > 1U)

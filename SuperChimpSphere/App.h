@@ -19,7 +19,6 @@ private:
 	Input input;
 	GameTime time;
 	std::unique_ptr<Level> currentLevel;
-	std::vector<std::string> levelSequence;
 	std::vector<std::unique_ptr<GameObject>> gameObjects;
 	float ttfps = 0;
 };

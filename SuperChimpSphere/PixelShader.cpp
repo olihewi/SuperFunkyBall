@@ -6,7 +6,7 @@ std::unordered_map<std::wstring,std::shared_ptr<PixelShader>> PixelShader::cache
 PixelShader::PixelShader(Renderer& renderer, const std::wstring& path)
 {
 	Microsoft::WRL::ComPtr<ID3DBlob> blob;
-	D3DReadFileToBlob(path.c_str(), &blob);
+	auto hr = D3DReadFileToBlob(path.c_str(), &blob);
 	renderer.GetDevice()->CreatePixelShader(
 		blob->GetBufferPointer(), // Bytecode
 		blob->GetBufferSize(), // Bytecode size

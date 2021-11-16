@@ -1,7 +1,9 @@
 {
   "sequence":
   [
+    "Levels/stage3.json",
     "Levels/stage1.json",
-    "Levels/stage2.json"
+    "Levels/stage2.json",
+    "Levels/stage3.json"
   ]
 }

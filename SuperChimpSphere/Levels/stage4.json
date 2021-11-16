@@ -1,0 +1,14 @@
+{
+  "mesh": "Levels/stage4.obj",
+  "spawn": [ 0.0, 40.0, 0.0],
+  "goals": 
+  [
+    {
+      "position": [ [ 0.0, 0.5, -8.0], [ 0.0, 0.0, 0.0] ],
+      "nextLevel": "stage1"
+    }
+  ],
+  "collectibles": 
+  [
+  ]
+}

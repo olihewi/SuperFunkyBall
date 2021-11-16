@@ -3,6 +3,6 @@
 class Skybox : public Mesh
 {
 public:
-	Skybox(Renderer& renderer, std::wstring _texturePath);
+	Skybox(Renderer& renderer, std::string _texturePath);
 };
 

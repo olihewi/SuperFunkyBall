@@ -1,4 +1,5 @@
 #include "GameTime.h"
+#include <cmath>
 
 GameTime::GameTime()
 {
@@ -14,7 +15,7 @@ float GameTime::Time()
 
 float GameTime::Delta()
 {
-	return std::chrono::duration<float>(now - last).count();
+	return std::fminf(std::chrono::duration<float>(now - last).count(),0.5F);
 }
 
 void GameTime::Tick()
