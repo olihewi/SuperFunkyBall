@@ -12,8 +12,6 @@ struct PixelShaderInput
     float3 normal : NORMAL;
 };
 
-Texture2D tex;
-
 PixelShaderInput main( VertexShaderInput input )
 {
     PixelShaderInput output;

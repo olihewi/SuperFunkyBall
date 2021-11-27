@@ -19,11 +19,11 @@ private:
 	std::vector<std::unique_ptr<Goal>> goals;
 	std::vector<std::unique_ptr<Collectible>> collectibles;
 
-	std::unique_ptr<UIText> playerScore;
-	std::unique_ptr<UIText> playerTime;
-	std::unique_ptr<UIText> playerSpeed;
+	std::vector<std::unique_ptr<UIText>> uiText;
 	int collectiblesCollected = 0;
 	float levelTime = 60.0F;
+	float timer = 0.0F;
+	float killY = -6.0F;
 	Vector3 spawnPoint;
 public:
 	bool finished = false;

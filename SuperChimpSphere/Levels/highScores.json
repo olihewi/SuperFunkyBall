@@ -1,0 +1,18 @@
+{
+  "Levels/stage1.json": {
+    "paper": 11,
+    "time": 3.3736822605133057
+  },
+  "Levels/stage2.json": {
+    "paper": 0,
+    "time": 4.116672515869141
+  },
+  "Levels/stage3.json": {
+    "paper": 2,
+    "time": 7.906831741333008
+  },
+  "Levels/stage4.json": {
+    "paper": 11,
+    "time": 8.010359764099121
+  }
+}

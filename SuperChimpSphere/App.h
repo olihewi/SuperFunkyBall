@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Input.h"
 #include "Level.h"
+#include <thread>
 class App
 {
 public:
@@ -21,5 +22,6 @@ private:
 	std::unique_ptr<Level> currentLevel;
 	std::vector<std::unique_ptr<GameObject>> gameObjects;
 	float ttfps = 0;
+	bool playing = true;
 };
 

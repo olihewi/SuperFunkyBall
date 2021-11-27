@@ -177,6 +177,7 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Sampler.cpp" />
     <ClCompile Include="Skybox.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Transform.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Sampler.h" />
     <ClInclude Include="Skybox.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />

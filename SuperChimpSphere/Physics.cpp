@@ -18,6 +18,8 @@ void Physics::ResolveCollision(Collision& collision, float dt)
 	Vector3 resultant = collision.normal * collision.penetration;
 	float ms = 1.0F / dt;
 	transform.position += resultant;
+	//Vector3 bounceResult = (-velocity) * collision.normal; //(1+bounciness);
+	//velocity += bounceResult;
 	velocity += resultant * ms;
 	touchingSurface = true;
 	surfaceNormal = collision.normal;

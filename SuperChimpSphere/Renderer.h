@@ -6,6 +6,7 @@
 #include "ConstantBuffer.h"
 #include <memory>
 #include "Vector3.h"
+#include "GameTime.h"
 class Renderer
 {
 public:
@@ -23,12 +24,14 @@ public:
 	void SetViewMatrix(const DirectX::XMMATRIX& viewMatrix);
 	void SetProjectionMatrix(const DirectX::XMMATRIX& projectionMatrix);
 	DirectX::XMMATRIX GetViewMatrix();
+	GameTime& GetRenderTime();
 private:
 	Microsoft::WRL::ComPtr<ID3D11Device> device;
 	Microsoft::WRL::ComPtr<IDXGISwapChain> swapChain;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> targetView;
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> depthStencilView;
+	GameTime time;
 
 	Colour backgroundColour = Colours::CornflowerBlue;
 

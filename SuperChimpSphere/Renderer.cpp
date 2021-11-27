@@ -105,7 +105,7 @@ Renderer::Renderer(HWND hWnd)
 	UINT sampleMask = 0xffffffff;
 	context->OMSetBlendState(blendState.Get(), blendFactor, sampleMask);*/
 
-	SetProjectionMatrix(DirectX::XMMatrixPerspectiveRH(1.0F, viewport.Height / viewport.Width, 0.5F, 100.0F));
+	SetProjectionMatrix(DirectX::XMMatrixPerspectiveRH(1.0F, viewport.Height / viewport.Width, 0.5F, 200.0F));
 }
 
 void Renderer::EndFrame()
@@ -117,7 +117,8 @@ void Renderer::EndFrame()
 		static_cast<float>(backgroundColour.a) / 255.0F };
 	swapChain->Present(1u, 0u);
 	context->ClearDepthStencilView(depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0F, 0U);
-	context->ClearRenderTargetView(targetView.Get(), color); 
+	context->ClearRenderTargetView(targetView.Get(), color);
+	time.Tick();
 }
 
 void Renderer::SetBackground(Colour c)
@@ -161,4 +162,9 @@ void Renderer::SetProjectionMatrix(const DirectX::XMMATRIX& projectionMatrix)
 DirectX::XMMATRIX Renderer::GetViewMatrix()
 {
 	return DirectX::XMMatrixTranspose(modelViewProjection.view);
+}
+
+GameTime& Renderer::GetRenderTime()
+{
+	return time;
 }

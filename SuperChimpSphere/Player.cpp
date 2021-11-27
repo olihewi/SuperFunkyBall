@@ -14,21 +14,16 @@ void Player::Update(Input& input, GameTime& time)
 {
 	Vector2 relativeMovement = input.GetMovement();
 
-	cameraTilt = cameraTilt.Lerp(relativeMovement * time.Delta() * 3.0F, 0.2F);
+	cameraTilt = cameraTilt.Lerp(relativeMovement / 16.0F, time.Delta() * 10.0F);
 	relativeMovement.y = -relativeMovement.y;
 	relativeMovement = relativeMovement.Rotate(cameraDir.x);
 
-	acceleration = acceleration.Lerp(relativeMovement * time.Delta() * 3.0F,0.2F);
-	physics->velocity += Vector3(acceleration.x, 0.0F, acceleration.y);
-
-	/*if (input.GetPrimaryButtonDown() && physics->touchingSurface)
-	{
-		physics->velocity += (Vector3s::up + physics->surfaceNormal) * 2.5F;
-	}*/
+	acceleration = acceleration.Lerp(relativeMovement * 4.0F,time.Delta() * 10.0F);
+	physics->velocity += Vector3(acceleration.x, 0.0F, acceleration.y) * time.Delta();
 
 	Vector2 vel2D{ physics->velocity.x,physics->velocity.z };
 	cameraDir += input.GetCamera() * time.Delta() * 1.0F / (1.0F + vel2D.Magnitude() * 0.1F) * 2.0F;
-	cameraDir.y = std::fmaxf(std::fminf(cameraDir.y,0.75F), 0.0F);
+	cameraDir.y = std::fmaxf(std::fminf(cameraDir.y,0.9F), 0.0F);
 
 	GameObject::Update(input, time);
 }

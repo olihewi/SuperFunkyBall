@@ -3,6 +3,7 @@
 class GameTime
 {
 	friend class App;
+	friend class Renderer;
 public:
 	GameTime();
 	float Time();

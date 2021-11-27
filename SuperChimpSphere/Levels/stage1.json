@@ -1,6 +1,7 @@
 {
+  "name": "1: Arena",
   "mesh": "Levels/stage1.obj",
-  "spawn": [ 0.0, 10.0, 0.0],
+  "spawn": [ 0.0, 5.0, 0.0],
   "goals": 
   [
     {
@@ -8,6 +9,8 @@
       "nextLevel": "stage2"
     }
   ],
+  "killY": -6.0,
+  "timeLimit": 30.0,
   "collectibles": 
   [
     [ 0.0, 0.5, -2.0],

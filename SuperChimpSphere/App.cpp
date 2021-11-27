@@ -7,6 +7,7 @@
 #include <fstream>
 #include "Json.h"
 #include "Light.h"
+#include <thread>
 
 App::App(const GameSettings& _settings) : settings(_settings), window(static_cast<int>(settings.video.resolution.x),static_cast<int>(settings.video.resolution.y),"ASGE"), input(window)
 {
@@ -33,16 +34,25 @@ App::App(const GameSettings& _settings) : settings(_settings), window(static_cas
 		currentLevel = std::make_unique<Level>(window.GetRenderer(),levelSequence.front());
 		levelSequence.erase(levelSequence.begin());
 	}*/
-	currentLevel = std::make_unique<Level>(window.GetRenderer(), "Levels/stage1.json");
+	currentLevel = std::make_unique<Level>(window.GetRenderer(), "Levels/stage4.json");
 	//gameObjects.push_back(std::make_unique<Model>(window.GetRenderer(), "Models/dog.obj", L"Models/dog.png"));
 }
 
 int App::Play()
 {
+	std::thread renderThread = std::thread([this]()
+	{
+		while (playing)
+		{
+			Render();
+		}
+	});
 	while (true)
 	{
 		if (const auto errorCode = Window::ProcessMessages())
 		{
+			playing = false;
+			renderThread.join();
 			return *errorCode;
 		}
 		GameLoop();
@@ -53,8 +63,13 @@ int App::Play()
 void App::GameLoop()
 {
 	Update();
-	Render();
-	window.GetRenderer().EndFrame();
+	if (ttfps <= 0.0F)
+	{
+		int fps = static_cast<int>(1.0F / time.Delta());
+		window.SetTitle("Super Funky Ball | Game: " + std::to_string(fps) + " TPS | Render: " + std::to_string(static_cast<int>(1.0F / window.GetRenderer().GetRenderTime().Delta())) + " FPS");
+		ttfps = 1.0F;
+	}
+	ttfps -= time.Delta();
 }
 
 void App::Update()
@@ -77,18 +92,10 @@ void App::Update()
 void App::Render()
 {
 	window.GetRenderer().SetBackground(Colours::CornflowerBlue);
-	if (ttfps <= 0.0F)
-	{
-		int fps = static_cast<int>(1.0F / time.Delta());
-		window.SetTitle("Super Funky Ball: " + std::to_string(fps) + " FPS");
-		ttfps = 1.0F;
-	}
-	ttfps -= time.Delta();
 	currentLevel->Render(window.GetRenderer());
 	for (auto& gameObject : gameObjects)
 	{
 		gameObject->Render(window.GetRenderer());
 	}
-	//mesh->Render(window.GetRenderer());
-	//window.GetRenderer().RenderTestTriangle(time.Time());
+	window.GetRenderer().EndFrame();
 }
