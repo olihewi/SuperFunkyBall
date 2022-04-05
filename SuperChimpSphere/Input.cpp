@@ -61,7 +61,7 @@ Vector2 Input::GetStick(unsigned int _index, unsigned int _stick)
 
 Vector2 Input::GetMovement()
 {
-	Vector2 movement = GetStick(0U, Controller::Sticks::Left) +
+	Vector2 movement = GetStick(1U, Controller::Sticks::Left) +
 		Vector2(static_cast<float>(GetKey('D')) - static_cast<float>(GetKey('A')),
 			static_cast<float>(GetKey('W')) - static_cast<float>(GetKey('S')));
 	if (movement.Magnitude() > 1.0F)
@@ -77,7 +77,7 @@ Vector2 Input::GetMovement()
 
 Vector2 Input::GetCamera()
 {
-	Vector2 camera = GetStick(0U, Controller::Sticks::Right) +
+	Vector2 camera = GetStick(1U, Controller::Sticks::Right) +
 		Vector2(static_cast<float>(GetKey(Keys::RightArrow)) - static_cast<float>(GetKey(Keys::LeftArrow)),
 			static_cast<float>(GetKey(Keys::UpArrow)) - static_cast<float>(GetKey(Keys::DownArrow)));
 	camera.y = -camera.y;

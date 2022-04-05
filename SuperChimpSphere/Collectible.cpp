@@ -3,7 +3,8 @@
 
 Collectible::Collectible(Renderer& renderer, int _value, Vector3 position) : value(_value)
 {
-	AddComponent(Mesh::CreatePrimitiveSphere(renderer, 0.25F, 4U));
+	//AddComponent(Mesh::CreatePrimitiveSphere(renderer, 0.25F, 4U));
+	AddComponent(std::make_unique<Mesh>(renderer, "Models/paperball.obj", "Textures/paperball.png"));
 	transform.position = position;
 }
 

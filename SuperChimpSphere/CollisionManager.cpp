@@ -84,6 +84,7 @@ void CollisionManager::SphereVsMesh(SphereCollider* sphere, MeshCollider* mesh, 
 {
 	std::vector<Collision> collisions;
 	Vector3 relativePos = mesh->transform.position - sphere->transform.position;
+	Vector3 sum = Vector3s::zero;
 	for (unsigned int i = 0; i < mesh->mesh->triangles.size(); i += 3)
 	{
 		// Points of the triangle
@@ -93,6 +94,7 @@ void CollisionManager::SphereVsMesh(SphereCollider* sphere, MeshCollider* mesh, 
 		Collision collision = SphereVsTriangle(sphere->radius, A, B, C, i);
 		if (collision.hit)
 		{
+			sum += collision.normal * collision.penetration;
 			collisions.push_back(collision);
 			relativePos = mesh->transform.position - sphere->transform.position;
 		}

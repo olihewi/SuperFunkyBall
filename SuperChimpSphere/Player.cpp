@@ -6,7 +6,7 @@ Player::Player(Renderer& renderer)
 	transform.position.y = 2.0F;
 	physics = dynamic_cast<Physics*>(AddComponent(std::make_unique<Physics>(transform)));
 	collider = dynamic_cast<SphereCollider*>(AddComponent(std::make_unique<SphereCollider>(transform, 0.5F, physics)));
-	AddComponent(std::make_unique<Mesh>(renderer, "Models/ball.obj", "Textures/ball.png"));
+	AddComponent(std::make_unique<Mesh>(renderer, "Models/newball.obj", "Textures/NewBall.png"));
 	//AddComponent(Mesh::CreatePrimitiveSphere(renderer, 0.5F, 16U, "Textures/Ball.png"));
 }
 
