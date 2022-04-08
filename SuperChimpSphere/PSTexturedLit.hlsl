@@ -26,8 +26,8 @@ float4 main(PixelShaderInput input) : SV_TARGET
     input.normal = normalize(input.normal);
     float4 diffuse = tex.Sample(splr, input.tex);
     float4 finalColour;
-    finalColour = diffuse * light.ambient;
-    finalColour += saturate(dot(light.direction, input.normal) * light.diffuse * diffuse);
+    float4 lighting = light.ambient + light.diffuse * saturate(dot(light.direction, input.normal));
+    finalColour = diffuse * lighting;
     finalColour.a = diffuse.a;
     return finalColour;
 }

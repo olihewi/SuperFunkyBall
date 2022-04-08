@@ -34,7 +34,7 @@ App::App(const GameSettings& _settings) : settings(_settings), window(static_cas
 		currentLevel = std::make_unique<Level>(window.GetRenderer(),levelSequence.front());
 		levelSequence.erase(levelSequence.begin());
 	}*/
-	currentLevel = std::make_unique<Level>(window.GetRenderer(), "Levels/stage4.json");
+	currentLevel = std::make_unique<Level>(window.GetRenderer(), "Levels/stage1.json");
 	//gameObjects.push_back(std::make_unique<Model>(window.GetRenderer(), "Models/dog.obj", L"Models/dog.png"));
 }
 

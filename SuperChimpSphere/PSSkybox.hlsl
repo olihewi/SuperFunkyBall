@@ -1,6 +1,6 @@
 struct Light
 {
-  float3 direction;
+  float4 direction;
   //float worthless;
   float4 ambient;
   float4 diffuse;
@@ -13,7 +13,8 @@ cbuffer lightBuffer : register(b1)
 struct PixelShaderInput
 {
   float4 pos : SV_POSITION;
-  float3 viewDir : TEXCOORD0;
+  float2 tex : TEXCOORD;
+  float3 normal : NORMAL;
 };
 
 Texture2D tex;
@@ -21,7 +22,12 @@ SamplerState splr;
 
 float4 main(PixelShaderInput input) : SV_TARGET
 {
-  float4 t = float4(1,1,1,1);
+    float2 uv = input.tex;
+    uv.x += light.direction.w / 50.0F;
+    float4 t = tex.Sample(splr, uv);
+    clip(t.a < 0.1F ? -1 : 1);
+    return t;
+  /*float4 t = float4(1,1,1,1);
 
   float3 viewDir = normalize(input.viewDir);
   float sunViewDot = dot(light.direction, viewDir);
@@ -31,7 +37,7 @@ float4 main(PixelShaderInput input) : SV_TARGET
   float sunViewDot01 = (sunViewDot + 1.0) * 0.5;
   float sunZenithDot01 = (sunZenithDot + 1.0) * 0.5;
 
-  return float4(viewZenithDot, viewZenithDot, viewZenithDot, 1);
+  return float4(viewZenithDot, viewZenithDot, viewZenithDot, 1);*/
 
   /*
   // Base Sky Colour

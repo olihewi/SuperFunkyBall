@@ -6,12 +6,13 @@ class Light : public GameComponent
 {
 public:
 	Light(Renderer& renderer, Vector3 _direction, DirectX::XMFLOAT4 _ambient, DirectX::XMFLOAT4 _diffuse);
+	void Update(GameTime& time) override;
 	void Render(Renderer& renderer) override;
 private:
 	struct LightBufferData
 	{
 		Vector3 direction;
-		float WORTHLESS; // constant buffer data has to be multiples of 16...
+		float gameTime; // constant buffer data has to be multiples of 16...
 		DirectX::XMFLOAT4 ambient;
 		DirectX::XMFLOAT4 diffuse;
 	};

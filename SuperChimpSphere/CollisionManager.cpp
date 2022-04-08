@@ -154,7 +154,7 @@ Collision CollisionManager::SphereVsTriangle(float radius, Vector3& A, Vector3& 
 			Vector3 AB = B - A;
 			Vector3 BC = C - B;
 			Vector3 CA = A - C;
-			// Distances between points of the triangls
+			// Distances between points of the triangles
 			float d1 = ab - aa;
 			float d2 = bc - bb;
 			float d3 = ac - cc;
@@ -167,7 +167,7 @@ Collision CollisionManager::SphereVsTriangle(float radius, Vector3& A, Vector3& 
 			Vector3 QC = C * e1 - Q1;
 			Vector3 QA = A * e2 - Q2;
 			Vector3 QB = B * e3 - Q3;
-			// If the sphere is inside of a triangle edge
+			// If the sphere is inside of each triangle edge
 			if ((Q1.DotProduct(Q1) < r2 * e1 * e1 || Q1.DotProduct(QC) < 0) &&
 				(Q2.DotProduct(Q2) < r2 * e2 * e2 || Q2.DotProduct(QA) < 0) &&
 				(Q3.DotProduct(Q3) < r2 * e3 * e3 || Q3.DotProduct(QB) < 0))

@@ -10,7 +10,7 @@
 Level::Level(Renderer& renderer, const std::string& levelFile)
 {
 	nextLevel = levelFile;
-	light = std::make_unique<Light>(renderer, Vector3{ 0.25F,1.0F,0.25F }.Normalized(), DirectX::XMFLOAT4(0.25F,0.25F,0.25F,1.0F), DirectX::XMFLOAT4(1.0F,1.0F,1.0F,1.0F));
+	light = std::make_unique<Light>(renderer, Vector3{ 0.25F,1.0F,0.25F }.Normalized(), DirectX::XMFLOAT4(0.33F,0.35F,0.4F,1.0F), DirectX::XMFLOAT4(1.0F,1.0F,0.86F,1.0F));
 	std::ifstream file;
 	file.open(levelFile);
 	if (file.is_open())
@@ -65,6 +65,7 @@ Level::Level(Renderer& renderer, const std::string& levelFile)
 
 void Level::Update(Input& input, GameTime& time)
 {
+	light->Update(time);
 	player->Update(input, time);
 	camera->Update(input, time);
 	if (player->transform.position.y <= killY)

@@ -74,6 +74,6 @@ Skybox::Skybox(Renderer& renderer, std::string _texturePath) :
             { 0.0F, 1.0 / 3.0F },
         },
         _texturePath,
-        L"PSTexturedFlat.cso")
+        L"PSSkybox.cso")
 {
 }

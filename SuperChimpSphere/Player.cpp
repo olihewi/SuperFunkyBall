@@ -25,11 +25,12 @@ void Player::Update(Input& input, GameTime& time)
 	cameraDir += input.GetCamera() * time.Delta() * 1.0F / (1.0F + vel2D.Magnitude() * 0.1F) * 2.0F;
 	cameraDir.y = std::fmaxf(std::fminf(cameraDir.y,0.9F), 0.0F);
 
+	transform.rotation *= DirectX::XMMatrixRotationX(physics->velocity.z * 0.5F * 3.14F * time.Delta()) * DirectX::XMMatrixRotationZ(-physics->velocity.x * 0.5F * 3.14F * time.Delta());
+
 	GameObject::Update(input, time);
 }
 
 void Player::Render(Renderer& renderer)
 {
-	transform.rotation *= DirectX::XMMatrixRotationX(physics->velocity.z * 0.025F) * DirectX::XMMatrixRotationZ(-physics->velocity.x * 0.025F);
 	GameObject::Render(renderer);
 }
