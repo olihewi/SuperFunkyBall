@@ -61,6 +61,7 @@ Level::Level(Renderer& renderer, const std::string& levelFile)
 			uiText.push_back(std::make_unique<UIText>(renderer, "Paper: " + std::to_string(j[levelFile]["paper"].get<int>()), Vector2(0.4F, 0.65F)));
 		}
 	}
+	loaded = true;
 }
 
 void Level::Update(Input& input, GameTime& time)

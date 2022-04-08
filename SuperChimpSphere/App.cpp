@@ -91,6 +91,7 @@ void App::Update()
 
 void App::Render()
 {
+	if (!currentLevel->loaded) return;
 	window.GetRenderer().SetBackground(Colours::CornflowerBlue);
 	currentLevel->Render(window.GetRenderer());
 	for (auto& gameObject : gameObjects)

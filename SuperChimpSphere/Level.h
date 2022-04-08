@@ -28,5 +28,6 @@ private:
 public:
 	bool finished = false;
 	std::string nextLevel;
+	bool loaded = false;
 };
 
